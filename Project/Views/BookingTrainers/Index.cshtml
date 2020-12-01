@@ -1,0 +1,84 @@
+﻿@model IEnumerable<Project.Models.ManageStaff.BookingTrainer>
+
+@{
+    ViewBag.Title = "Bookings";
+}
+
+<h2 style="margin-top:30px;font-weight:900;text-align:center;">List of Bookings</h2><hr />
+
+    <div style="margin-top:20px;margin-bottom:20px;">
+        <div style="margin-top:10px;float:left;margin-right: 10px;">
+            <a href="@Url.Action("Create", "BookingTrainers")" class="btn btn-success">
+                <span class="fa fa-dashboard fa-fw  text-info"></span> Create Booking
+            </a>
+        </div>
+        </div><br /><br />
+<table class="table table-bordered" style="margin-top:20px;">
+    <tr style="color:#ff0000">
+        <th>
+            @Html.DisplayNameFor(model => model.Event.Subject)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Member.Email)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.BookingDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDNum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.MobileNumber)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Event.Subject)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Member.Email)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.BookingDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IDNum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.MobileNumber)
+            </td>
+            <td>
+                <div class="btn-group">
+                    <a href="@Url.Action("Details", "BookingTrainers", new { id = item.BookingID})" class="btn btn-info">View</a>
+                    @*<a href="@Url.Action("Edit", "MembershipPlans", new { id = item.PlanID})" class="btn btn-success">Edit</a>*@
+                    <a href="@Url.Action("Delete", "BookingTrainers", new { id = item.BookingID})" class="btn btn-danger">Cancel</a>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,142 @@
+﻿
+@{
+    ViewBag.Title = "MySearch";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Return Item</h2>
+
+@*@using (Html.BeginForm("Index", "Search", FormMethod.Get, new { @class = "search-form" }))
+    {
+    <span>
+        <input type="text" name="search" id="search" placeholder="Search" autocomplete="on" spellcheck="false"
+               value="@Request["search"]" style="margin-top:100px;margin-left:500px;" />
+    </span>
+
+    }*@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: Arial;
+            margin-top:30px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .openBtn {
+            background: #f1f1f1;
+            border: none;
+            padding: 10px 15px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+            .openBtn:hover {
+                background: #bbb;
+            }
+
+        .overlay {
+            height: 100%;
+            width: 100%;
+            display: none;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0, 0.9);
+        }
+
+        .overlay-content {
+            position: relative;
+            top: 46%;
+            width: 80%;
+            text-align: center;
+            margin-top: 30px;
+            margin: auto;
+        }
+
+        .overlay .closebtn {
+            position: absolute;
+            top: 20px;
+            right: 45px;
+            font-size: 60px;
+            cursor: pointer;
+            color: white;
+        }
+
+            .overlay .closebtn:hover {
+                color: #ccc;
+            }
+
+        .overlay input[type=text] {
+            width: 130px;
+            box-sizing: border-box;
+            border: 2px solid #ff6a00;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: white;
+            background-image: url('searchicon.png');
+            background-position: 10px 10px;
+            background-repeat: no-repeat;
+            padding: 12px 20px 12px 40px;
+            -webkit-transition: width 0.4s ease-in-out;
+            transition: width 0.4s ease-in-out;
+        }
+
+       
+
+        .overlay button {
+            float: left;
+            width: 20%;
+            padding: 15px;
+            background: #ddd;
+            font-size: 17px;
+            border: none;
+            cursor: pointer;
+        }
+
+            .overlay button:hover {
+                background: #bbb;
+            }
+
+            input[type=text]:focus {
+                width: 200%;
+            }
+    </style>
+</head>
+<body>
+
+    <div id="myOverlay" class="overlay" style="margin-top:35px;">
+        <span class="closebtn" onclick="closeSearch()" title="Close Overlay">×</span>
+        <div class="overlay-content">
+            @using (Html.BeginForm("Index", "Search", FormMethod.Get, new { @class = "search-form" }))
+            {
+                <span>
+                    <input type="text" name="search" id="search" placeholder="Enter Reference Code" autocomplete="on" spellcheck="false"
+                           value="@Request["search"]" style="margin-bottom:100px;margin-left:60px;border-color:#ff6a00;" />
+                </span>
+
+            }
+        </div>
+    </div>
+
+    <button class="openBtn" onclick="openSearch()" style="margin-top:100px;margin-left:50px;">Search</button>
+
+    <script>
+        function openSearch() {
+            document.getElementById("myOverlay").style.display = "block";
+        }
+
+        function closeSearch() {
+            document.getElementById("myOverlay").style.display = "none";
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Project.Models.ManageStaff.RateBooking>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="text-center" style="font-weight:900;margin-bottom:60px;">Ratings for Bookings</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Member.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Comments)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ThisDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ArticleId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rating)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Member.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comments)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThisDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArticleId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.BookingId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.BookingId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.BookingId })
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,267 @@
+﻿body {
+    background-image: url('../Images/banner-bg.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-color: #111;
+    color: #fff;
+    text-shadow: 3px #111;
+    font-size: 18px;
+    padding-top: 50px;
+    display: block;
+}
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+
+.commentBox {
+    background-color:#efefef;
+    padding:10px;
+    border-radius:10px;
+}
+
+.starFade{
+    background-image:url('/Images/StarFade.gif');
+    min-width:30px;
+    min-height:30px;
+    display:inline-block;
+    cursor:pointer;
+}
+
+.starFadeN{
+    background-image:url('/Images/StarFade.gif');
+    min-width:30px;
+    min-height:30px;
+    display:inline-block;
+}
+
+.starGlow{
+    background-image:url('/Images/starglow.gif');
+    min-width:30px;
+    min-height:30px;
+    display:inline-block;
+    cursor:pointer;
+}
+.starGlowN{
+    background-image:url('/Images/starglow.gif');
+    min-width:30px;
+    min-height:30px;
+    display:inline-block;
+}
+#error{
+    color:red;
+}
+
+table{
+    border-collapse:collapse;
+}
+
+table,th,td{
+    border:1px solid #111;
+}
+.shopping-cart th{
+    background-color:#0026ff;
+    color:white;
+    padding:10px;
+}
+#quantity{
+    width:30%;
+    margin:5px;
+    margin-left:60px;
+    border:1px solid #111;
+    text-align:center;
+}
+.continue-shopping {
+    text-decoration: none;
+    background-color: #0026ff;
+    padding:10px;
+    color:#efefef;
+    border:none;
+}
+.delete-shopping{
+    color:black;
+    text-decoration:none;
+}
+delete-shopping:hover{
+    color:red;
+}
+.update-shopping {
+    text-decoration: none;
+    background-color: #0026ff;
+    padding: 8px;
+    color: #efefef;
+    border:none;
+}
+.total-price-text{
+    text-transform:uppercase;
+    color:red;
+}
+.total-price-digit{
+    color:red;
+    text-align:center;
+}
+#more{
+    display:none;
+}
+
+
+
+
+
+
+.notification {
+    background-color: #555;
+    color: white;
+    text-decoration: none;
+    padding: 15px 26px;
+    position: relative;
+    display: inline-block;
+    border-radius: 2px;
+}
+
+    .notification:hover {
+        background: red;
+    }
+
+    .notification .badge {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        padding: 5px 10px;
+        border-radius: 50%;
+        background: red;
+        color: white;
+    }
+/*---------------------
+  Home About
+-----------------------*/
+
+.home-about {
+    background: #151515;
+}
+
+.about-text {
+    padding-top: 18px;
+}
+
+    .about-text h2 {
+        font-size: 48px;
+        font-weight: 500;
+        color: #ffffff;
+        text-transform: uppercase;
+        margin-bottom: 36px;
+    }
+
+    .about-text p.short-details {
+        font-size: 20px;
+        font-weight: 600;
+        color: #ffffff;
+        line-height: 28px;
+        margin-bottom: 20px;
+    }
+
+    .about-text p.long-details {
+        color: #ffffff;
+        margin-bottom: 40px;
+    }
+
+    .about-text .primary-btn.about-btn:after {
+        opacity: 1;
+    }
+
+.about-img img {
+    min-width: 100%;
+}
+
+
+.single-price-plan {
+    background: #ffffff;
+    text-align: center;
+    padding: 45px 0 50px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+    .single-price-plan h4 {
+        color: #272727;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-bottom: 34px;
+    }
+
+    .single-price-plan .price-plan {
+        margin-bottom: 35px;
+    }
+
+        .single-price-plan .price-plan h2 {
+            color: #272727;
+            font-size: 48px;
+            font-weight: 700;
+            position: relative;
+            padding-left: 18px;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+            .single-price-plan .price-plan h2 span {
+                color: #272727;
+                font-size: 18px;
+                font-weight: 700;
+                position: absolute;
+                left: 0;
+                top: 9px;
+            }
+
+        .single-price-plan .price-plan p {
+            font-size: 16px;
+            line-height: 20px;
+            color: #272727;
+            font-family: "Oswald", sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+    .single-price-plan ul {
+        margin-bottom: 35px;
+    }
+
+        .single-price-plan ul li {
+            list-style: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #272727;
+            line-height: 42px;
+        }
+
+    .single-price-plan .primary-btn.price-btn {
+        background-image: -webkit-gradient(linear, left top, right top, color-stop(100%, #e16521), color-stop(0%, #e4381C)), -webkit-gradient(linear, left top, right top, color-stop(100%, #e4381C), color-stop(0%, #e16521));
+        background-image: -o-linear-gradient(left, #e16521 100%, #e4381C 0%), -o-linear-gradient(left, #e4381C 100%, #e16521 0%);
+        background-image: linear-gradient(to right, #e16521 100%, #e4381C 0%), linear-gradient(to right, #e4381C 100%, #e16521 0%);
+        color: #e4381C;
+    }
+
+        .single-price-plan .primary-btn.price-btn:hover {
+            color: #ffffff;
+        }
+
+            .single-price-plan .primary-btn.price-btn:hover:after {
+                opacity: 1;
+            }

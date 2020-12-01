@@ -1,0 +1,7 @@
+﻿@model IEnumerable<Project.Models.OnlineShopping.Order>
+
+@{ ViewBag.Title = "Search";
+                ViewBag.Message = String.Format("Search for \"{0}\"", ViewBag.Search); }
+
+
+@Html.Partial("_UserList", Model)

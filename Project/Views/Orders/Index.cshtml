@@ -1,0 +1,72 @@
+﻿@using Project.Models
+@using PagedList;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<Project.Models.OnlineShopping.Order>
+@{
+    ViewBag.Title = "Index";
+}
+@if (User.IsInRole("Admin"))
+{
+    <div class="container" style="margin-top:20px;">
+        <a type="button" class="btn btn-default btn-lg pull-right" href="@Url.Action("Index", "DeliveryTimes")" style="margin-right:5px;">Assign To Driver</a>
+    </div>
+
+}
+<h2>Order Listing</h2>
+
+<table class="table">
+    <tr>
+        <th colspan="2">
+            Customer Information
+        </th>
+        <th>
+            OrderDate
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+                @Html.Label("Name : ")@Html.DisplayFor(modelItem => item.CustomerName)<br/>
+                @Html.Label("Email : ")@Html.DisplayFor(modelItem => item.CustomerEmail)
+    </td>
+    <td>
+                @Html.Label("Address : ")@Html.DisplayFor(modelItem => item.CustomerAddress)<br />
+                @Html.Label("Phone : ") @Html.DisplayFor(modelItem => item.CustomerPhone)
+    </td>
+    <td>
+        @String.Format("{0:MM/dd/yyyy}", item.OrderDate)
+    </td>
+    @*<td>
+            @Html.DisplayFor(modelItem => item.PaymentType)
+        </td>*@
+    @*<td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>*@
+    <td>
+        <div class="btn-group">
+            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                Action <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+
+                <li>@Html.ActionLink("Details", "Details", new { id = item.OrderID })</li>
+
+            </ul>
+        </div>
+    </td>
+</tr>
+    }
+
+</table>
+@if (Model.PageCount > 1)
+{
+    <div class="clear">
+        <span>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount</span>
+        <div class="div-pagination">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+        </div>
+    </div>
+}

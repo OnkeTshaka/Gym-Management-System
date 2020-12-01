@@ -1,0 +1,104 @@
+﻿@model Project.Models.Essentials.MembershipPlan
+
+@{
+    ViewBag.Title = "endTrial";
+}
+
+<h2 class="text-center">Membership Cancellation</h2>
+<br />
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    /* Create two equal columns that floats next to each other */
+    .column {
+        float: left;
+        width: 50%;
+        padding: 10px;
+        height: 300px; /* Should be removed. Only for demonstration */
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+</style>
+
+<div class="row jumbotron" style="margin-left:10px;margin-right:10px;">
+    <div class="column">
+        <dl class="dl-horizontal container" style="color:#111">
+            <dt>
+                @Html.DisplayNameFor(model => model.Package.PackageType)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Package.PackageType)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Username)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Username)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt>
+                @Html.Label("Amount Due")
+            </dt>
+
+            <dd>
+                @if (DateTime.Now >= Model.trialPeriod)
+                {
+                    <h4 class="text-danger" style="font-weight:900">R0.00 </h4>
+
+                }
+                else
+                {
+                    <h4 class="text-danger" style="font-weight:900">@(" R"+Model.TotalCost)</h4>
+
+                }
+            </dd>
+            AM I WITHIN THE WITHDRAW PERIOD?
+            @if (DateTime.Now >= Model.trialPeriod)
+            {
+                <div class="text-danger" style="font-weight:900;font-size:25px;">The trial period has ended. Refund is forfeited!</div>
+            }
+            else
+            {
+                <dd class="container" id="squares" style="display: block; float: left; width: 150px; height: 150px;border:solid orange;background-color:orange;">
+
+
+                    <h1 style="font-weight:900">  @(Model.Days()) </h1>
+                    @if (Model.Days() > 2)
+                    {
+                        <h5 style="font-weight:900">Days Left</h5>
+
+                    }
+                    else
+                    {
+                        <h5 style="font-weight:900">Day Left</h5>
+                    }
+                </dd>
+            }
+
+
+        </dl>
+    </div>
+    <div class="column">
+        <ul style="color:#111">
+            <li>A longer period may be advertised on the website.</li>
+            <li>Billing starts after the trial period</li>
+        </ul>
+    </div>
+</div>
+<a href="@Url.Action("Details", "Profile")" class="btn btn-info">Back</a>

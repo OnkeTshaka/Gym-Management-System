@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Project.Models.ManageStaff.CommentsRating>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div style="margin-top:20px;">
+    @if (User.IsInRole("Admin"))
+    {
+        <a href="@Url.Action("Index", "Admin")" class="btn btn-success pull-right">
+            <span class="fa fa-dashboard fa-fw  text-info"></span> Dashboard
+        </a>
+    }
+</div>
+
+<h2 style="margin-top:30px;font-weight:900">Ratings</h2>
+<hr />
+
+<div style="margin-top:20px;margin-bottom:20px;">
+    <div style="margin-top:10px;float:left;margin-right: 10px;">
+        <a href="@Url.Action("Create", "CommentsRatings")" class="btn btn-success">
+            <span class="fa fa-dashboard fa-fw  text-info"></span> Rate
+        </a>
+    </div>
+</div>
+<br />
+<br />
+<table class="table table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Comments)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ThisDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ArticleId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rating)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comments)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThisDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArticleId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.CommentId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.CommentId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.CommentId })
+            </td>
+        </tr>
+    }
+
+</table>

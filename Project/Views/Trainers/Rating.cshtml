@@ -1,0 +1,50 @@
+﻿@model Project.ViewModels.RatingTrainerViewModel
+
+@{
+    ViewBag.Title = "Rating";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- Team Section -->
+<section class="bg-light-gray">
+    <div class="container">
+        <div class="row" style="margin-bottom:50px;">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading" style="font-weight:900">Rate Our Trainers</h2><hr />
+            </div>
+            <div style="width:100%;" class="row">
+                @using (Html.BeginForm("/Rating", "Trainers", FormMethod.Get, htmlAttributes: new { @class = "form-inline my-2 my-lg-0" }))
+                {
+                    <button class="btn btn-outline-light my-2 my-sm-0 mr-5 pull-right" type="submit" style="color:#111;height:50px;">Search</button>
+
+                    <input class="form-control mr-sm-2" type="search" id="search" name="searching" placeholder="Search Trainers..." aria-label="Search" style="float:right;margin-right:5px;width:500px;height:50px;" oninput="listSearchExamplesScript()"><br /><br /><br />
+
+                }
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var trainer in Model.Trainers)
+            {
+                <div class="col-sm-4">
+                    <div class="team-member">
+                        <a href="@Url.Action("Details", "Trainers", new { id = trainer.TrainerID })">
+                            <img src="data:image/png;base64,@Convert.ToBase64String(trainer.Picture, 0, trainer.Picture.Length)" style="width: 300px; height: 300px;border-radius:50%;" alt="@trainer.Name Picture" />
+
+                        </a>
+                        <h4>Trainer Name: @trainer.Name</h4>
+                        <p class="text-muted">Experience: @trainer.Experience</p>
+
+                        <p class="text-muted">Class Name: @trainer.SessionName</p>
+
+                        <p class="text-muted">Class Description: @trainer.ClassDescription</p>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+    </div>
+</section>
+
+

@@ -1,0 +1,122 @@
+﻿@using Project.Models.Supplier;
+@model Project.Models.Supplier.supplierProduct
+@{
+    ViewBag.Title = "CheckoutDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<html>
+<head>
+
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+
+</head>
+<body>
+    @if (Session["cart1"] == null)
+    {
+        <div class="alert alert-danger">
+            <strong>No product added to cart!</strong>
+        </div>
+
+    }
+    else
+    {
+        <table id="Index" class="table table-bordered" style="margin-top:20px;">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Product</th>
+                    <th>Product ID</th>
+                    <th>Product Description</th>
+                    <th>Quantity</th>
+                    <th>Control</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int Total = 0;
+                }
+                @foreach (Item item in (List<Item>)Session["cart1"])
+                {
+
+                    <tr>
+                        <td>
+                            <img src="~/ProdImg/@item.supplierProduct.ProductImage" class="img-responsive img-thumbnail" style="width: 50px; height: 50px;" alt="" />
+                        </td>
+                        @*<td>
+                                <img src="data:image/png;base64,@Convert.ToBase64String(item.Product.Picture, 0, item.Product.Picture.Length)" class="img-responsive img-thumbnail" style="width: 50px; height: 50px;" alt="" />
+                            </td>*@
+                        <td>@item.supplierProduct.ProductName</td>
+                        <td>@item.supplierProduct.ProductID</td>
+                        <td>@item.supplierProduct.Description</td>
+                        <td>@item.Quantity</td>
+                        <td>
+                            <a href="@Url.Action("AddToCart", "Home2", new { productId = item.supplierProduct.ProductID, url="CheckoutDetails" })">
+                                <i class="glyphicon glyphicon-plus"></i>
+                            </a>
+                            <a href="@Url.Action("DecreaseQty", "Home2", new { productId = item.supplierProduct.ProductID, url="CheckoutDetails" })">
+                                <i class="glyphicon glyphicon-minus"></i>
+                            </a>
+                            <a href="@Url.Action("RemoveFromCart", "Home2", new { productId = item.supplierProduct.ProductID, url="CheckoutDetails" })">
+                                <i class="glyphicon glyphicon-remove"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+
+                @*<tr>
+                        <td colspan="6" class="text-right"><b>Total: @Total</b></td>
+
+                    </tr>*@
+            </tbody>
+
+        </table>
+        <button id="btnExcel">Download quotation1</button>
+        @*<a href="@Url.Action("PaymentWithPaypal", "ShoppingCart", new { id = Model.ProductID, price = Model.TotalCost, P_amount = Model.TotalCost, cid = Model.PlanID })" class="btn btn-success"><i class="fa fa-lock"></i>Payment >></a>*@
+
+        <a href="@Url.Action("Excel","Home2")" style="background-color:#fff;">
+            <span class="label label-danger" style="font-size:15px;margin-left:15px;">Download Quatation2</span>
+        </a>
+
+
+        <a href="@Url.Action("Index","Home2")" style="background-color:#fff;">
+            <span class="label label-danger" style="font-size:15px;margin-left:15px;">Return To Shopping</span>
+        </a>
+        <a href="@Url.Action("Index", "SendMail")" style="background-color:#fff;">
+            <span class="label label-danger" style="font-size:15px;margin-left:15px;">Send Quotation</span>
+        </a>
+
+        @*@Html.ActionLink("Order Inventory", "Index", "Home2")*@
+    }
+</body>
+</html>
+<script type="text/javascript">
+    $("#btnExcel").click(function () {
+
+        XLExport("Index");
+    });
+
+
+    function XLExport(tableId) {
+        var tab_text = "<table border='2px'><tr bgcolor='#87AFC6'>";
+        var textRange;
+        var j = 0;
+        tab = document.getElementById(tableId);
+        for (j = 0; j < tab.rows.length; j++) {
+            tab_text = tab_text + tab.rows[j].innerHTML + "</tr>";
+        }
+        tab_text = tab_text + "</table>";
+        tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+        tab_text = tab_text.replace(/<img[^>]*>/gi, ""); // remove if u want images in your table
+        tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // remove input params
+        //sa = window.open('application / vnd.openxmlformarts - officedocument.spreadsheet,' + encodeURIComponent(tab_text));
+        sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
+        return (sa);
+    }
+    function getFileName(settings) {
+        return (settings.filename ? settings.f : "FirewallsOrder") +
+            (settings.fileext ? settings.file : ".xlx");
+
+    }
+</script>
+

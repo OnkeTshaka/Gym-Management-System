@@ -1,0 +1,78 @@
+﻿@model Project.Models.ManageStaff.Member
+
+@{
+    ViewBag.Title = "Edit Your Profile";
+    Layout = "~/Views/Shared/_AdminSideBarPartial.cshtml";
+}
+
+
+
+
+<div class="container">
+    <div class="col-md-9" style="margin-left: 240px;margin-top:10px;
+        padding: 0px 10px;">
+        <h2>Edit Your Profile</h2>
+        <hr />
+
+        @using (Html.BeginForm("Edit", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.ID)
+                @Html.HiddenFor(model => model.JoinDate)
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Username, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-2">
+                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.IDNum, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.IDNum, new { @class = "form-control" })
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Address, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MobileNumber, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.MobileNumber, new { @class = "form-control" })
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Profile, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    <input type="file" name="ProfilePictureFile" />
+                </div>
+
+            </div>
+            <br />
+            <div class="form-group" style="margin-top:20px;">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" /> | @Html.ActionLink("Back", "Details", new { id = @Model.ID }, htmlAttributes: new { @class = "btn btn-default" })
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

@@ -1,0 +1,155 @@
+﻿@using Project.Models.OnlineShopping;
+
+<!DOCTYPE html>
+
+<style>
+
+    #logo {
+        border-radius: 50%;
+    }
+</style>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Fitness Company</title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container" @*style="float:left;"*@>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse col-md-6 col-sm-6 col-xs-6">
+                <ul class="nav navbar-nav">
+
+                    <li><a href='@Url.Action("Index","Home", new { area = "" }, null)'><img src="~/Images/logo.jpg" style="height:50px; width:auto;border-radius:50%;" /></a></li>
+                    @if (Request.IsAuthenticated)
+                    {
+
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+
+                        <li class="dropdown">
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Our Services<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Join Membership", "Create", "MembershipPlans", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("Classes", "Class", "Home", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("Search Order", "MySearch", "Search", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("Products", "Index", "Products", new { area = "" }, null)</li>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <li>@Html.ActionLink("Sales Report", "Index", "GenerateReports", new { area = "" }, null)</li>
+                                    <li>@Html.ActionLink("Drivers", "Index", "Drivers", new { area = "" }, null)</li>
+                                }
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="">Cart<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+
+                                @if (Session["cart"] != null)
+                                {
+                                    foreach (CartItem item in (List<CartItem>)Session["cart"])
+                                    {
+
+                                        <li style="color:green;margin-left:10px;">
+                                            @item.Product.Name (@item.Quantity)
+                                        </li>
+                                    }
+                                }
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="@Url.Action("CheckoutDetails","ShoppingCart")" style="background-color:#fff;">
+                                        <span class="label label-danger" style="font-size:15px;margin-left:15px;">Checkout</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#">Quotation<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+
+                                    @if (Session["cart1"] != null)
+                                    {
+
+                                        foreach (Project.Models.Supplier.Item item in (List<Project.Models.Supplier.Item>)Session["cart1"])
+                                        {
+
+                                            <li style="color:green;margin-left:10px;">
+                                                @item.supplierProduct.ProductName (@item.Quantity)
+                                            </li>
+                                        }
+                                    }
+
+
+
+                                    <li class="divider"></li>
+                                    <li><a href="@Url.Action("Checkout", "Home2")" class="btn btn-success" style="border:solid #111;">Checkout</a></li>
+
+                                </ul>
+                            }
+                        </li>
+
+                        <li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                            <li>@Html.ActionLink("Send Mail", "Index", "SendMail")</li>
+
+                        }
+                            @if (User.IsInRole("Supplier"))
+                            {
+                                <li>@Html.ActionLink("Send Invoice", "Index", "SupplierClass")</li>
+
+                            }
+                            </li>
+
+                            <li>@Html.ActionLink("Schedule", "Calendar", "Home")</li>
+                            <li>@Html.ActionLink("Trainers", "Rating", "Trainers")</li>
+                            @*<li>@Html.ActionLink("Watch Videos", "Index", "Videos")</li>*@
+                        }
+
+
+
+
+                </ul>
+             
+            </div>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+        <br />
+        <div class="container body-content" style="min-height: 100vh; width: 100%;">
+            @RenderBody()
+            <footer style="margin-top:100px;">
+                <p class="text-center">
+                    Copyright &copy; @DateTime.Now.Year All rights reserved | The Return of Firewalls Team <i class="fa fa-heart-o" aria-hidden="true"></i>
+                </p>
+            </footer>
+            <p>FITNESS COMPANY</p><br />
+            <p>
+                82 Google reviews
+                Gym in Berea, Durban
+                Located in: Berea Centre
+                Address: 249 King Dinuzulu Rd N, Bulwer, Berea, 4083
+                Phone: 031 201 0333
+            </p>
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

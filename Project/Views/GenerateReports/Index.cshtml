@@ -1,0 +1,74 @@
+﻿@model Project.ViewModels.SalesViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<script src="~/Scripts/chart/highcharts.js"></script>
+<script src="~/Scripts/chart/exporting.js"></script>
+<script src="~/Scripts/chart/export-data.js"></script>
+<script src="~/Scripts/chart/accessibility.js"></script>
+<h1 class="text-center">Sales Report</h1>
+<div style="margin-top:40px;">
+    <h1 class="text-danger">Stats</h1>
+    <span style="font-size:20px;font-weight:900;color:red">
+        <b style="color:#fff">Total spent on products: </b>  @("R"+Model.Total)
+    </span><br />
+    <span style="font-size:20px;font-weight:900;color:red">
+        <b style="color:#fff">Numbers of orders: </b> @Model.Products
+    </span>
+    <br />
+    <span style="font-size:20px;font-weight:900;color:red">
+        <b style="color:#fff">Total Items bought: </b> @Model.Size
+    </span>
+</div><br />
+<div id="container" class="jumbotron" style="min-width: 310px; height: 500px; margin: 0 auto"></div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $.getJSON("/GenerateReports/GetData", function (data) {
+            var Names = []
+            var Qts = []
+            for (var i = 0; i < data.length; i++) {
+                Names.push(data[i].name);
+                Qts.push(data[i].count);
+            }
+
+            Highcharts.chart('container', {
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: 'THE MOST POPULAR PRODUCTS'
+                },
+                subtitle: {
+                    text: 'Fitness Company'
+                },
+                xAxis: {
+                    categories: Names
+                },
+                yAxis: {
+                    title: {
+                        text: '<h1>Quantity</h1>'
+                    }
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                        enableMouseTracking: false
+                    }
+                },
+                series: [{
+                    name: '<h2>Products</h2>',
+                    data: Qts
+                }]
+            });
+        });
+    });
+
+
+</script>

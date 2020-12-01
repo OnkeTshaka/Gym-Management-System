@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Project.Models.Essentials.Driver>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="text-center">GYM DRIVERS</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DriverLicence)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmailAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsAvailable)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DriverLicence)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhoneNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmailAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsAvailable)
+        </td>
+        <td>
+            <div class="btn-group">
+                <a href="@Url.Action("Details", "Drivers", new { id = item.DriverID })" class="btn btn-info">Details</a>
+                <a href="@Url.Action("Edit", "Drivers", new { id = item.DriverID })" class="btn btn-success">Edit</a>
+                <a href="@Url.Action("Delete", "Drivers", new { id = item.DriverID })" class="btn btn-danger">Delete</a>
+            </div>
+        </td>
+    </tr>
+}
+
+</table>

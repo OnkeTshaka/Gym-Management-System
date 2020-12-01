@@ -1,0 +1,72 @@
+﻿@model Project.ViewModels.DriverDashboardViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row" style="margin-left:10px;margin-right:10px;margin-top:20px;">
+    <h2 class="text-center">Driver's Dashboard</h2><br />
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <img src="~/Images/ICONS/346-3468973_football-bv-personal-trainer-icon-clipart.png.jpg" style="width:50px;height:50px;border-radius:50%;" />
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-address-card fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <!--Trainer Panel-->
+                        <div class="huge" style="font-size:36px;">@Model.DeliveryOrders</div>
+                        @if (Model.DeliveryOrders > 1)
+                        {
+                            <div>Total Delivery Orders</div>
+                        }
+                        else
+                        {
+                    <div>Total Delivery Order</div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+            <a href="@Url.Action("Index", "DeliveryTimes")">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <img src="~/Images/ICONS/346-3468973_football-bv-personal-trainer-icon-clipart.png.jpg" style="width:50px;height:50px;border-radius:50%;" />
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-address-card fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge" style="font-size:36px;">@Model.DeliveryReturns</div>
+                        @if (Model.DeliveryReturns > 1)
+                        {
+                    <div>Total Delivery Returns</div>
+                        }
+                        else
+                        {
+                    <div>Total Delivery Return</div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+            <a href="@Url.Action("Index", "DeliveryReturns")">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    </div>
+

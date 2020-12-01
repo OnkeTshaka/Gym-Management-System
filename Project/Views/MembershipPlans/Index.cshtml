@@ -1,0 +1,106 @@
+﻿@model IEnumerable<Project.Models.Essentials.MembershipPlan>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="text-center" style="font-weight:900;margin-bottom:60px;">Membership Plan</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Member.Profile)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Member.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Package.PackageType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Shift)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JoinDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.trialPeriod)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalCost)
+        </th>
+        <th>Status</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @if (item.Member.Profile != null)
+        {
+            <img src="~/Images/@item.Member.Profile"
+                 class="img-responsive img-thumbnail" style="width:100px; height:100px"
+                 title="@item.Username Profile Picture" />
+        }
+        else
+        {
+            <img src="@Url.Content("~/Images/icon.png")"
+                 class="img-responsive img-thumbnail" style="width:100px; height:100px"
+                 title="@item.Username Profile Picture" />
+        }
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Member.Email)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Package.PackageType)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Username)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Shift)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.JoinDate)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.trialPeriod)
+    </td>
+    <td>
+        @("R"+item.TotalCost)
+    </td>
+    <td>
+        @if (item.CancelMember == true)
+        {
+            <h4 style="color:red;font-weight:900"class="glyphicon glyphicon-alert">Cancelled</h4>
+        } 
+        else
+        {
+            <h4 style="color:green;font-weight:900" class="glyphicon glyphicon-check">Active</h4>
+        }
+    </td>
+    <td>
+        <div class="btn-group">
+            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                Action <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li>@Html.ActionLink("Edit", "Edit", new { id = item.PlanID })</li>
+                <li>@Html.ActionLink("Details", "Details", new { id = item.PlanID })</li>
+                <li>@Html.ActionLink("Delete", "Delete", new { id = item.PlanID })</li>
+                <li>@Html.ActionLink("Trial Period", "endTrial", new { id = item.PlanID })</li>
+            </ul>
+        </div>
+    </td>
+</tr>
+    }
+
+</table>

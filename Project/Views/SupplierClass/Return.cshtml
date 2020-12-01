@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Project.Models.ManageStaff.SupplierClass>
+
+@{
+    ViewBag.Title = "Return";
+}
+
+<h2>Return</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.InvoicePrice)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.To)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Subject)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Body)
+        </th>
+        <th></th>*@
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.InvoicePrice)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.To)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Subject)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Body)
+        </td>*@
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.SupplierID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.SupplierID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.SupplierID })
+
+            @*@{
+                string url = "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&amount=" + ((item.InvoicePrice) / 16.43) + "&business=Shakampechuar@gmail.com&item_name=Payments&return=https://localhost:44359/ReturnItems/Index";
+
+            }*@
+            @*<a href="@url" class="btn btn-default">Pay</a>*@
+        </td>
+    </tr>
+}
+
+</table>

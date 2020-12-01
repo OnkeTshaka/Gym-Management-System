@@ -1,0 +1,58 @@
+﻿@model Project.Models.ManageStaff.RateClass
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>RateClass</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Member.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Member.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Comments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comments)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThisDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThisDateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ArticleId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ArticleId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rating)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ClassId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

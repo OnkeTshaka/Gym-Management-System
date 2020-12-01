@@ -1,0 +1,181 @@
+﻿@model Project.ViewModels.HomeViewModel
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/Site.css" rel="stylesheet" />
+<div id="themeSlider" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#themeSlider" data-slide-to="0" class="active"></li>
+        <li data-target="#themeSlider" data-slide-to="1"></li>
+        <li data-target="#themeSlider" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="item active">
+            <div class="imgOverlay"></div>
+            <a style="color:#fff;" href="@Url.Action("About", "Home")">
+                <img style="height:450px;width:100%" src="~/Images/f2.jpg" alt="First slide" />
+
+            </a>
+            <h1 class="centered" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);color:#fff;font-size:60px;text-shadow:#111 2px 4px 8px;">FITNESS COMPANY</h1>
+            <div class="carousel-caption">
+
+            </div>
+        </div>
+        <div class="item">
+            <div class="imgOverlay"></div>
+            <a style="color:#fff;" href="@Url.Action("Offers", "Package")">
+
+                <img style="height:450px;width:100%" src="~/Images/f1.jpg" alt="Second slide" />
+            </a>
+            <h1 class="centered" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);color:#fff;font-size:60px;text-shadow:#111 2px 4px 8px;">JOIN GYM</h1>
+            <div class="carousel-caption">
+
+
+            </div>
+        </div>
+        <div class="item">
+            <div class="imgOverlay"></div>
+            <a style="color:#fff;" href="@Url.Action("Calendar", "Home")">
+                <img style="height:450px;width:100%" src="~/Images/floor2.jpg" alt="Second slide" />
+
+            </a>
+            <h1 class="centered" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);color:#fff;font-size:60px;text-shadow:#111 2px 4px 8px;">VIEW SCHEDULE</h1>
+            <div class="carousel-caption">
+
+
+            </div>
+        </div>
+    </div>
+    <a class="left carousel-control" href="#themeSlider" data-slide="prev">
+        <span class="fa fa-chevron-left"></span>
+    </a>
+    <a class="right carousel-control" href="#themeSlider" data-slide="next">
+        <span class="fa fa-chevron-right"></span>
+    </a>
+
+</div>
+<!-- About Section Begin -->
+<section class="home-about spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="about-text">
+                    <h2>WELCOME TO FITNESS COMPANY</h2>
+                    <p class="short-details">
+                        Fitness Company,
+                        Long Standing History: Auguste Gand opened and managed one of the first gyms in Durban, South Africa- 1962.
+                    </p>
+                    <p class="long-details">
+                        He has since assisted and trained many atheletes and bodybuilders to achieve their goals...
+                        Well known bodybuilders like Arnold Schwarzenegger, Frank Zane, Reg Park and Mike Katz have also visited
+                    </p>
+                    <a class="btn btn-success" style="color:#fff;" href="@Url.Action("About", "Home")">Learn More</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="about-img">
+                    <img src="~/Images/front.png" style="height:500px;width:auto;" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Price Plan Section Begin -->
+<section class="price-section spad set-bg" style="background-image: url('../Images/price-bg.jpg');">
+    <div class="row">
+        <div class="section-title text-center" style="color:#fff;font-weight:900;">
+            @*<h2 style="font-weight:bold;">CHOOSE YOUR MEMBERSHIP PLAN</h2>*@
+        </div>
+        <br />
+        @foreach (var item in Model.Package)
+        {
+            <div class="col-lg-4" style="margin-bottom:0;padding:20px;">
+                <div class="single-price-plan">
+                    <h4>@Html.DisplayFor(modelItem => item.PackageType)</h4>
+                    <div class="price-plan">
+                        <h2>@Html.DisplayFor(modelItem => item.Monthly_Fee) <span>R</span></h2>
+                        @*<p>Monthly</p>*@
+                    </div>
+                    <ul>
+                        <li>Duration: @Html.DisplayFor(modelItem => item.Duration)</li>
+                        <li>Joining fee: R @Html.DisplayFor(modelItem => item.Joining_Fee)</li>
+                        <li>@Html.DisplayFor(modelItem => item.Description)</li>
+                        <li>Total Cost:  @Html.DisplayFor(modelItem => item.TotalCost) </li>
+                    </ul>
+                    @*<a class="btn btn-success" style="color:#fff;" href="@Url.Action("Create", "MembershipPlans")">Join Membership</a>*@
+                </div>
+            </div>
+        }
+
+    </div>
+</section>
+<!-- Price Plan Section End -->
+<div>
+    @Html.Action("PartialMap", "Map")
+
+</div>
+@*<iframe allow="microphone;"
+        width="350"
+        height="430"
+        src="https://console.dialogflow.com/api-client/demo/embedded/18d5aa0e-937e-48f4-87c0-184c0735f3f2">
+</iframe>*@
+<!-- Contact Section -->
+<section id="contact" style="background-color:#111;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading" style="color:#fff;">Contact Us</h2>
+                <h3 class="section-subheading text-muted">Send all your messages and queries here.</h3><br />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+
+                @using (Html.BeginForm("Contact", "Home"))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.ContactUsForm.Name, new { @class = "form-control", placeholder = "Your Name *" })
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.ContactUsForm.EmailAddress, new { @class = "form-control", placeholder = "Your Email Address *" })
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.ContactUsForm.PhoneNumber, new { @class = "form-control", placeholder = "Your Phone Number *" })
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.TextAreaFor(m => m.ContactUsForm.Message, new { @class = "form-control", placeholder = "Your Message *" })
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-lg-12 text-center">
+                            <div id="success"></div>
+                            <button type="submit" class="btn btn-success" onclick="myFunction()" style="margin-bottom:15px;">Send Message</button><br />
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript" style="color:aqua;">
+
+    function myFunction() {
+        alert("Message Sent!");
+    }
+</script>
+

@@ -1,0 +1,218 @@
+﻿@model Project.Models.Return.ReturnItem
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Return Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.Label("Reason")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Reason.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.selectAction)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.selectAction)
+        </dd>
+
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ClientName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ClientName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ClientEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ClientEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReturnDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReturnDate)
+        </dd>
+
+        @*<dt>
+                @Html.DisplayNameFor(model => model.Tax)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Tax)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Total)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Total)
+            </dd>*@
+        @*<dd>
+                @{
+                    foreach (var product in Model.Products)
+                    {
+                        @product.Name <br />
+                    }
+                }
+            </dd>*@
+
+
+        <dd>
+            <h2 class="text-center">
+                Status: @if (Model.Status == "Pending")
+                {
+                    <span style="color:red;">Pending</span>
+                }
+                else if (Model.Status == "Delivered")
+                {
+                    <span style="color:red;">Delivered</span>
+                }
+                else if (Model.Status == "Awaiting")
+                {
+                    <span style="color:red;">Awaiting</span>
+                }
+
+                else if (Model.Status == "Approved")
+                {
+                    <span style="color:red;">Approved</span>
+                }
+            </h2>
+
+        </dd>
+
+    </dl>
+</div>
+@if (User.IsInRole("Admin"))
+{
+    <div class="container" style="margin-top:20px;">
+        <a type="button" class="btn btn-default btn-lg pull-right" href="@Url.Action("Create", "DeliveryReturns", routeValues:new { id=Model.ReturnItemID})" style="margin-right:5px;">Assign To Driver</a>
+    </div>
+}
+@if (User.IsInRole("Driver"))
+{
+    <div class="row jumbotron" style="color:#111">
+        <div class="col-md-12">
+            <h2 class="text-center" style="font-weight:900">Get Directions</h2>
+            <a href="@Url.Action("Index", "DeliveryReturns")" class="btn btn-warning pull-right" style="margin-left:0;">
+                Back To Delivery
+            </a>
+            <div>
+                <form>
+                    <div class="form-group">
+                        <label>Travel From :</label>
+                        <input id="travelfrom" type="text" name="name" value="@Model.From" class="form-control" disabled="disabled" />
+                    </div>
+                    <div class="form-group">
+                        <label>To :</label>
+                        <input id="travelto" type="text" name="name" value="@Model.To" class="form-control" disabled="disabled" />
+                    </div>
+                    <input type="button" value="Get Route" onclick="GetRoute()" id="btnSave" style="color:#111;" />
+
+                </form>
+                <br />
+                <div>
+                    <div id="dvDistance" style="font-size:30px;">
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="dvMap" style="min-height:500px"></div>
+
+        </div>
+    </div>
+}
+
+@section scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <!--ENSURE YOU CHANGE TO YOUR OWN API KEY HERE !!! -->
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDinWPcxH7MB6uiKDMD8h1mmVk3CNVU9vw" type="text/javascript"></script>
+
+    <!-- code for example 1 -->
+    <script>
+
+        var source, destination;
+        var directionsDisplay;
+        var directionsService = new google.maps.DirectionsService();
+
+        // initialise the location of the map on Chichester in England (ref lat and lng)
+        var map = new google.maps.Map(document.getElementById('dvMap'), {
+            center: { lat: -29.856349, lng: 31.003004 },
+            zoom: 13,
+            mapTypeId: 'roadmap'
+        });
+
+        google.maps.event.addDomListener(window, 'load', function () {
+            new google.maps.places.SearchBox(document.getElementById('travelfrom'));
+            new google.maps.places.SearchBox(document.getElementById('travelto'));
+            directionsDisplay = new google.maps.DirectionsRenderer({ 'draggable': true });
+        });
+
+        function GetRoute() {
+
+            directionsDisplay.setMap(map);
+
+            source = document.getElementById("travelfrom").value;
+            destination = document.getElementById("travelto").value;
+
+            var request = {
+                origin: source,
+                destination: destination,
+                travelMode: google.maps.TravelMode.DRIVING
+            };
+
+            directionsService.route(request, function (response, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setDirections(response);
+                }
+            });
+
+            //*********DISTANCE AND DURATION**********************//
+            var service = new google.maps.DistanceMatrixService();
+            service.getDistanceMatrix({
+                origins: [source],
+                destinations: [destination],
+                travelMode: google.maps.TravelMode.DRIVING,
+                unitSystem: google.maps.UnitSystem.METRIC,
+                avoidHighways: false,
+                avoidTolls: false
+            }, function (response, status) {
+
+                if (status == google.maps.DistanceMatrixStatus.OK && response.rows[0].elements[0].status != "ZERO_RESULTS") {
+                    var distance = response.rows[0].elements[0].distance.text;
+                    var duration = response.rows[0].elements[0].duration.value;
+                    var dvDistance = document.getElementById("dvDistance");
+                    duration = parseFloat(duration / 60).toFixed(2);
+                    dvDistance.innerHTML = "";
+                    dvDistance.innerHTML += "Distance: " + distance + "<br />";
+                    dvDistance.innerHTML += "Time:" + duration + " min";
+
+                } else {
+                    alert("Unable to find the distance via road.");
+                }
+            });
+        }
+
+    </script>
+}
+<a href="@Url.Action("Details", "Profile")" class="btn btn-info">Back</a>

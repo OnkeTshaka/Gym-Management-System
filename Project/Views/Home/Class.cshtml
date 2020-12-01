@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Project.Models.ManageStaff.Session>
+@{
+    ViewBag.Title = "Class";
+}
+
+<h2 class="section-heading text-center" style="font-weight:900">Classes</h2>
+<hr />
+<div style="width:100%;" class="row">
+    @using (Html.BeginForm("/Class", "Home", FormMethod.Get, htmlAttributes: new { @class = "form-inline my-2 my-lg-0" }))
+    {
+        <button class="btn btn-outline-light my-2 my-sm-0 mr-5 pull-right" type="submit" style="color:#111;height:50px;">Search</button>
+
+        <input class="form-control mr-sm-2" type="search" id="searching" name="searching" placeholder="Search Class..." aria-label="Search" style="float:right;margin-right:5px;width:500px;height:50px;"><br /><br /><br />
+
+    }
+</div>
+<div class="row">
+    <div style="padding:20px;margin-left:50px;margin-right:50px;">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3" style="margin-top:50px">
+                <div class="thumbnail" style=" padding-left:55px;">
+                    <div class="image">
+                        <a href="@Url.Action("Details", "Sessions", new { id = item.SessionID })">
+                            <img class="img-responsive" src="data:image/png;base64,@Convert.ToBase64String(item.Icon, 0, item.Icon.Length)" style="width: 150px; height: 150px;" />
+
+                        </a>
+                    </div><hr />
+                    <div class="caption" style="border-top:3px solid #808080">
+                        <h4 style="color:#111;">@Html.DisplayFor(modelItem => item.SessionType)</h4>
+                        <a class="btn btn-default btn-success" style="margin-bottom:50px;color:#fff;" href="@Url.Action("Details", "Sessions", new { id = item.SessionID })">View</a>
+
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+
+</div>

@@ -1,0 +1,155 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<Project.Models.ManageStaff.Trainer>
+@{
+    ViewBag.Title = "Index";
+}
+<div style="margin-top:20px;">
+    <div style="margin-top:10px;float:right;margin-right: 10px;">
+        <a href="@Url.Action("Create", "Trainers")" class="btn btn-success">
+            <span class="fa fa-dashboard fa-fw  text-info"></span> Add Trainer
+        </a>
+    </div>
+
+    <div id="message" class="mt-4">@TempData["message"]</div>
+    <div style="width:100%;" class="row">
+        @using (Html.BeginForm("/Index", "Trainers", FormMethod.Get, htmlAttributes: new { @class = "form-inline my-2 my-lg-0" }))
+        {
+            <button class="btn btn-outline-light my-2 my-sm-0 mr-5 pull-right" type="submit" style="color:#111;height:50px;">Search</button>
+
+            <input class="form-control mr-sm-2" type="search" id="search" name="searching" placeholder="Search Trainers..." aria-label="Search" style="float:right;margin-right:5px;width:500px;height:50px;" oninput="listSearchExamplesScript()"><br /><br /><br />
+
+        }
+    </div>
+</div>
+@*<a href="@Url.Action("PrintAll", "Trainers")" class="btn btn-default">
+        Export PDF
+    </a>*@
+<div class="panel panel-default" style="margin-top:20px;">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><h3>List of Trainers</h3>@*@Html.ActionLink("Print", "PrintAll")*@</div>
+    <table class="table table-bordered table-striped" style="color:#111;">
+        <tr>
+            <th>
+
+            </th>
+            <th>
+                @Html.Label("Name")
+            </th>
+            <th>
+                @Html.Label("LastName")
+            </th>
+            <th>
+                @Html.Label("Phone")
+            </th>
+            <th>
+                @Html.Label("Class")
+            </th>
+            <th>
+                @Html.Label("Description")
+            </th>
+
+            <th>
+                @Html.Label("ID Number")
+            </th>
+            <th>
+                @Html.Label("DOB")
+            </th>
+            <th>
+                @Html.Label("Age")
+            </th>
+            <th>
+                @Html.Label("Gender")
+            </th>
+            <th>
+                @Html.Label("Control")
+            </th>
+        </tr>
+
+        @if (Model.Count() == 0)
+        {
+            <tr>
+                <td style="color:#ff0000;font-weight:900;font-size:large;">
+                    No Match Found
+                </td>
+
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a href="@Url.Action("Details", "Trainers", new { id = item.TrainerID })">
+                            <img src="data:image/png;base64,@Convert.ToBase64String(item.Picture, 0, item.Picture.Length)" class="img-responsive img-thumbnail" style="width: 100px; height: 100px;" alt="@item.Name" />
+                        </a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.LastName, "Edit", "Trainers", new { id = item.TrainerID }, new { target = "_blank" })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Contact_No)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Session.SessionType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID_No)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DOB)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.age)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.gender)
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("Delete", "Delete", new { id = item.TrainerID }, new { target = "_blank" })
+                    </td>
+                </tr>
+            }
+
+        }
+
+    </table>
+</div>
+<br />
+<div>
+    @if (Model.PageCount > 1)
+    {
+        <div class="clear">
+            <span style="font-weight:500;">Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount</span>
+            <div class="div-pagination">
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+            </div>
+        </div>
+    }
+</div>
+@section Scripts {
+    <script>
+        $(function () {
+            if ($("#message").html() != '') {
+                $("#message").addClass("alert alert-success text-center").show();
+
+                setTimeout(function () {
+
+                    $("#message").fadeOut("normal", function () {
+                        $(this).remove();
+                    });
+
+                }, 2000);
+            }
+        });
+    </script>
+}

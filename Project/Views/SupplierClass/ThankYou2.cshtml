@@ -1,0 +1,42 @@
+﻿@model Project.Models.ManageStaff.SupplierClass
+@{
+    ViewBag.Title = "ThankYou2";
+}
+
+<h2>ThankYou</h2>
+
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<fieldset>
+    @*<legend>
+            Thank you, Your email is successfully sent!
+        </legend>*@
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary()
+        @Html.AntiForgeryToken()
+        if (ViewBag.Message != null)
+        {
+            <div style="background-color:#00ff21;padding:20px;">
+                @ViewBag.Message
+            </div><br />
+        }
+        <div class="btn-group" style="margin-top:20px;">
+            <a type="button" class="btn btn-default btn-lg pull-left" style="margin-bottom:50px;color:#111;font-weight:900;" href="@Url.Action("Index", "SendMail")">Send another email</a>
+            <a type="button" class="btn btn-default btn-lg pull-left" style="margin-bottom:50px;color:#111;font-weight:900;" href="@Url.Action("Index", "Home2")">Return to home</a>
+        </div>
+        <br />
+        <br />
+        <br />
+
+    }
+</fieldset>
+
+
+

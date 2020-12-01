@@ -1,0 +1,162 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model Project.ViewModels.ProductPageViewModel
+@{
+    ViewBag.Title = "Index";
+    bool isEmpty = !Model.Products.Any();
+}
+
+<h2 class="text-center" style="text-transform:uppercase;">Latest Products, GET DISCOUNT IF YOU BUY WITH R100 OR MORE!!!!</h2>
+@if (User.IsInRole("Admin"))
+{
+<div class="container">
+    <a type="button" class="btn btn-default btn-lg pull-left" href="@Url.Action("Create", "Products")">Add Product</a>
+    <div style="width:100%;">
+        @using (Html.BeginForm("/Index", "Products", FormMethod.Get, htmlAttributes: new { @class = "form-inline my-2 my-lg-0" }))
+        {
+            <button class="btn btn-outline-light my-2 my-sm-0 mr-5 pull-right" type="submit" style="color:#111;height:50px;">Search</button>
+
+            if (Request.QueryString["category"] != null)
+            {
+                <input type="hidden" name="category" value="@Request.QueryString["category"]" />
+            }
+            <input class="form-control mr-sm-2" type="search" id="txtSearch" name="search" placeholder="Search Product..." aria-label="Search" style="float:right;margin-right:5px;width:500px;height:50px;"><br /><br /><br />
+
+        }
+    </div>
+</div>
+    }
+    <hr />
+  
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="btn-group-vertical" style="background-color:#ffffff;border-top-color:#111;">
+                    @Html.RouteLink("Home", null, htmlAttributes: new { @class = "btn btn - primary", @style = "background-color:orange;color:#fff;" })
+                    @foreach (var category in Model.Categories)
+                    {
+                        @Html.ActionLink(category.Name, "/Index", new { category = category.Name }, htmlAttributes: new { @class = (category.Name.Equals(ViewBag.selectedCategory) ? "btn btn-primary mb-1" : "btn btn-outline-primary mb-1"), @style = "color:#111;" });
+                    }
+
+                </div>
+            </div>
+
+            <div class="col-md-10 container">
+                @if (!string.IsNullOrEmpty(Request.QueryString["search"]) && isEmpty)
+                {
+                    <p class="text-center">No results match your search criteria!</p> }
+                else if (isEmpty)
+                {
+                    <p class="text-center">The product list is empty!</p> }
+                else
+                {
+                    foreach (var item in Model.Products)
+                    {
+                        <div class="col-sm-4 special_grid_col" style="border:thin cadetblue;width:250px;">
+                            <div class="special_box">
+                                <div class="panel-heading" style="background-color:orange;color:#fff;">@item.Name</div>
+                                <div class="panel-body">
+                                    <a href="@Url.Action("Details", "Products", new { id = item.ProductID })">
+                                        <img src="data:image/png;base64,@Convert.ToBase64String(item.Picture, 0, item.Picture.Length)" class="img-responsive img-thumbnail" style="width: 250px; height: 200px;" alt="" />
+                                    </a>
+                                    <div class="caption">
+                                        <div class="special_item_price">
+                                            @Html.Label("Price: ")    <span class="price-old">
+
+                                                @("R"+item.Price)
+                                            </span> <span class="price-new">@("R"+item.GetDiscountedPrice())</span>
+                                            <span style="color:#ff0000">@("AVAL: "+item.Quantity)</span>
+                                        </div>
+                                        <p>
+                                            @if (item.Quantity > 0)
+                                            {
+                                                using (Html.BeginForm("AddToCart", "ShoppingCart", new { productId = item.ProductID, url = "Index" }, FormMethod.Post))
+                                                {
+                                                    <input type='submit' class='btn btn-success' onclick="myFunction()" value='Add to Cart'>
+                                                }
+                                            }
+                                            else
+                                            {
+                                            <p style="color:#ff0000">Out of Stock</p>
+                                        }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+                    }
+
+
+            </div>
+            <div class="text-center">
+                @Html.PagedListPager(Model.Products, page => Url.Action("Index", new { page, search = Request.QueryString["search"], category = Request.QueryString["category"] }),
+                                                                  new PagedListRenderOptions()
+                                                                  {
+                                                                      Display = PagedListDisplayMode.IfNeeded
+                                                                  })
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" style="color:aqua;">
+
+        function myFunction() {
+            alert("Product added to cart!");
+        }
+    </script>
+    <style>
+        .productitem img {
+            width: 180px;
+            height: 180px;
+            -webkit-transition-duration: 0.5s;
+            -moz-transition-duration: 0.5s;
+            -o-transition-duration: 0.5s;
+            width: 100%;
+        }
+
+        .special_grid_col {
+            float: left;
+            width: 25%;
+            padding: 0.5em;
+            text-align: center;
+        }
+
+        .special_box {
+            border: 1px solid cadetblue;
+        }
+
+        .special_grid_col:hover .special_box {
+            transition: 1s all ease;
+            -webkit-transition: 0.5s all ease;
+            -moz-transition: 0.5s all ease;
+            -o-transition: 0.5s all ease;
+        }
+
+            .special_grid_col:hover .special_box img {
+                -webkit-transform: scale(0.9);
+                -moz-transform: scale(0.9);
+                -o-transform: scale(0.9);
+                opacity: 1;
+            }
+
+        .special_item_price {
+            padding-bottom: 20px;
+        }
+
+            .special_item_price .price-new {
+                color: #ff6978;
+                margin-right: 15px;
+                font-weight: 500;
+                font-size: 1.2em;
+            }
+
+            .special_item_price .price-old {
+                text-decoration: line-through;
+                color: green;
+                font-weight: normal;
+                font-size: 1.2em;
+                margin-right: 10px;
+            }
+    </style>

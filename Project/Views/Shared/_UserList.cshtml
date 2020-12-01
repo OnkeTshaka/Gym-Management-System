@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Project.Models.OnlineShopping.Order>
+
+
+<div class="inner-wrapper">
+    <h2 class="subtitle center">@ViewBag.Message</h2>
+
+    @if (Model != null && Model.Any())
+    {
+        foreach (var user in Model)
+        {
+<div class="post tight">
+    <div class="post__top">
+        <a href="@Url.Action("Details2", "Orders", new { @id = user.OrderID })" class="post__user" style="color:#ff0000">My Order: @user.Refcode</a>
+    </div>
+</div> }
+            }
+            else
+            {
+<p>No results found.<a href="@Url.Action("MySearch", "Search")" class="post__user">Try Again!</a></p>}
+</div>

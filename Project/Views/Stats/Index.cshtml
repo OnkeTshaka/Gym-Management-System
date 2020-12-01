@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<script src="~/Scripts/chart/exporting.js"></script>
+    <script src="~/Scripts/chart/highcharts.js"></script>
+    <script src="~/Scripts/chart/accessibility.js"></script>
+    <script src="~/Scripts/chart/export-data.js"></script>
+
+<figure class="highcharts-figure" style="padding:30px">
+    <div id="container"></div>
+    <p class="highcharts-description">
+        Pie charts are very popular for showing a compact overview of a
+        composition or comparison. While they can be harder to read than
+        column charts, they remain a popular choice for small datasets.
+    </p>
+</figure>
+
+<script>
+    $(document).ready(function () {
+        $.getJSON("/Stats/GetData", function (data) {
+            Highcharts.chart('container', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: '<b>MEMBERSHIP CANCELLATIONS</b>'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                accessibility: {
+                    point: {
+                        valueSuffix: '%'
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Results',
+                    colorByPoint: true,
+                    data: [{
+                        name:"Expensive",
+                        y: data.Expensive,
+                        sliced: true,
+                        selected: true
+                    }, {
+                        name:"Busy",
+                        y: data.Busy
+                        },
+                        {
+                            name: "Environment",
+                            y: data.Environment
+                        },
+                        {
+                            name: "Afford",
+                            y: data.Afford
+                        },{
+                        name:"Other",
+                        y: data.Other
+                    }]
+                }]
+            });
+        });
+    });
+
+
+
+</script>

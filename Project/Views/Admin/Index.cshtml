@@ -1,0 +1,482 @@
+﻿@model Project.ViewModels.DashboardViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+<div class="container">
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <!-- Page Heading -->
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">
+                        Dashboard <small>Statistics Overview</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li class="active">
+                            <i class="fa fa-dashboard"></i> Dashboard
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            @*first row*@
+        <div class="row" style="margin-left:10px;margin-right:10px;">
+            <div class="col-lg-5">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Today's New Members</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="list-group">
+                            @foreach (var Member in Model.Members)
+                            {
+                                DateTime Time = DateTime.Parse(Member.JoinDate);
+                                String TimeString = Time.ToString("dd/MM/yyyy");
+                                Time = DateTime.ParseExact(TimeString, "dd/MM/yyyy", null);
+                                DateTime Today = DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yyyy"), "dd/MM/yyyy", null);
+                                if (DateTime.Compare(Time, Today) == 0)
+                                {
+                                    <a href="@Url.Action("Details", "Profile", new { target ="_blank",id =Member.ID })" class="list-group-item">
+                                        <span class="badge">@Member.ID</span>
+                                        @if (Member.Profile != null)
+                                        {
+                                            <img src="~/Images/@Member.Profile" style="width:60px;height:60px;border-radius:50%" /><b style="margin-left:12px;text-transform:uppercase; color:forestgreen;font-size:30px;">@Member.Username</b>
+
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Images/icon.png" style="width:60px;height:60px;border-radius:50%" /><b style="margin-left:12px;text-transform:uppercase; color:forestgreen;font-size:30px;">@Member.Username</b>
+
+                                        }
+                                    </a>
+                                }
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+         
+         
+
+
+
+
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="list-group">
+                    <a href="#" class="list-group-item active">
+                        Short Links
+                    </a>
+                    <a href="@Url.Action("Unfiltered", "RequestMembers")" class="list-group-item">Refund requests</a>
+                    <a href="@Url.Action("Index", "Roles")" class="list-group-item">User Roles</a>
+                    <a href="@Url.Action("Index", "BookingTrainers")" class="list-group-item">Bookings</a>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="list-group">
+                    <a href="#" class="list-group-item active">
+                        Refund Requests
+                    </a>
+                    <a href="@Url.Action("Unfiltered", "RequestMembers")" class="list-group-item">Membership</a>
+                    <a href="@Url.Action("Index", "ReturnItems")" class="list-group-item">Return Items</a>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="list-group">
+                    <a href="#" class="list-group-item active" style="background-color:orange">
+                        Orders  (@Model.Orders)
+                    </a>
+                    <a href="@Url.Action("Index", "Orders")" class="list-group-item">Orders</a>
+                    <a href="@Url.Action("Index", "DeliveryTimes")" class="list-group-item">Delivery Times</a>
+                    <a href="@Url.Action("Index", "Categories")" class="list-group-item">Add Category</a>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="list-group">
+                    <a href="#" class="list-group-item active">
+                        Return Items (@Model.ReturnItems)
+                    </a>
+                    <a href="@Url.Action("Index", "ReturnItems")" class="list-group-item">Return requests</a>
+                    <a href="@Url.Action("Index", "DeliveryReturns")" class="list-group-item">Delivery Returns</a>
+                </div>
+            </div>
+        </div>
+            <div class="row" style="margin-left:10px;margin-right:10px;">
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <img src="~/Images/ICONS/346-3468973_football-bv-personal-trainer-icon-clipart.png.jpg" style="width:50px;height:50px;border-radius:50%;" />
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-address-card fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <!--Trainer Panel-->
+                                    <div class="huge" style="font-size:36px;">@Model.Trainers</div>
+                                    @if (Model.Trainers > 1)
+                                    {
+                                        <div>Trainers</div>
+                                    }
+                                    else
+                                    {
+                                        <div>Trainer</div>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                        <a href="@Url.Action("Index", "Trainers")">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <img src="~/Images/ICONS/346-3468973_football-bv-personal-trainer-icon-clipart.png.jpg" style="width:50px;height:50px;border-radius:50%;" />
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-address-card fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge" style="font-size:36px;">@Model.Reviews</div>
+                                    @if (Model.Reviews > 1)
+                                    {
+                                        <div>Reviews</div>
+                                    }
+                                    else
+                                    {
+                                        <div>Review</div>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                        <a href="@Url.Action("Reviews", "Admin")">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <img src="~/Images/ICONS/2020-03-27_195555.jpg" style="width:50px;height:50px;border-radius:50%;" />
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-paper-plane fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <!--Sessions Panel-->
+                                    <div class="huge" style="font-size:36px;">@Model.Classes</div>
+                                    @if (Model.Classes > 1)
+                                    {
+                                        <div>Classes</div>
+                                    }
+                                    else
+                                    {
+                                        <div>Class</div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <a href="@Url.Action("Index", "Sessions")">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <img src="~/Images/ICONS/2020-03-27_195535.jpg" style="width:50px;height:50px;border-radius:50%;" />
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-ticket fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <!--Order Panel-->
+                                    <div class="huge" style="font-size:36px;">@Model.MembersWithPlan</div>
+                                    @if (@Model.MembersWithPlan > 1)
+                                    {
+                                        <div>Membership Plan</div>
+                                    }
+                                    else
+                                    {
+                                        <div>Membership Plans</div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <a href="@Url.Action("Index", "MembershipPlans")">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <figure class="highcharts-figure" style="padding:30px">
+                <div id="container"></div>
+                <p class="highcharts-description">
+                    Pie charts are very popular for showing a compact overview of a
+                    composition or comparison. While they can be harder to read than
+                    column charts, they remain a popular choice for small datasets.
+                </p>
+            </figure>
+
+            @*second row*@
+            <div class="row" style="margin-left:10px;margin-right:10px;">
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <img src="~/Images/ICONS/346-3468973_football-bv-personal-trainer-icon-clipart.png.jpg" style="width:50px;height:50px;border-radius:50%;" />
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-address-card fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <!--Trainer Panel-->
+                                    <div class="huge" style="font-size:36px;">@Model.Packages</div>
+                                    @if (Model.Packages > 1)
+                                    {
+                                <div>Packages</div>
+                                    }
+                                    else
+                                    {
+                                <div>Package</div>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                        <a href="@Url.Action("Index", "Package")">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <img src="~/Images/ICONS/346-3468973_football-bv-personal-trainer-icon-clipart.png.jpg" style="width:50px;height:50px;border-radius:50%;" />
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-address-card fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge" style="font-size:36px;">@Model.Users</div>
+                                    @if (Model.Users > 1)
+                                    {
+                                        <div>Users</div>
+                                    }
+                                    else
+                                    {
+                                <div>User</div>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                        <a href="@Url.Action("Index", "Members")">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <img src="~/Images/ICONS/2020-03-27_195555.jpg" style="width:50px;height:50px;border-radius:50%;" />
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-paper-plane fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <!--Sessions Panel-->
+                                    <div class="huge" style="font-size:36px;">@Model.Products</div>
+                                    @if (Model.Products > 1)
+                                    {
+                                        <div>Products</div>
+                                    }
+                                    else
+                                    {
+                                        <div>Product</div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <a href="@Url.Action("Index", "Products")">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <img src="~/Images/ICONS/2020-03-27_195535.jpg" style="width:50px;height:50px;border-radius:50%;" />
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-ticket fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <!--Order Panel-->
+                                    <div class="huge" style="font-size:36px;">@Model.Categories</div>
+                                    @if (@Model.Categories > 1)
+                                    {
+                                <div>Categories</div>
+                                    }
+                                    else
+                                    {
+                                <div>Category</div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <a href="@Url.Action("Index", "Categories")">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+           
+                <section class="row" style="margin-left:40px;margin-right:40px;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-envelope-o fa-fw"></i> Messages</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover" style="color:#111;">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Message</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var ContactUsForms in Model.ContactUsForms.OrderByDescending(c => c.Id).Take(5))
+                                        {
+                                            <tr>
+                                                <td>@ContactUsForms.Name</td>
+                                                <td><a href="@Url.Action("ViewContactForm", "Admin", new { id = @ContactUsForms.Id })">@ContactUsForms.Message</a></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-right">
+                                <a href="@Url.Action("ContactForms", "Admin")">View All Contact Forms <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+    </div>
+    <!-- /#page-wrapper -->
+    <!-- /#wrapper -->
+</div>
+<script src="~/Scripts/chart/exporting.js"></script>
+<script src="~/Scripts/chart/highcharts.js"></script>
+<script src="~/Scripts/chart/accessibility.js"></script>
+<script src="~/Scripts/chart/export-data.js"></script>
+
+
+
+    <script>
+        $(document).ready(function () {
+            $.getJSON("/Stats/GetData", function (data) {
+                Highcharts.chart('container', {
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie'
+                    },
+                    title: {
+                        text: '<b>MEMBERSHIP CANCELLATIONS</b>'
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    accessibility: {
+                        point: {
+                            valueSuffix: '%'
+                        }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Results',
+                        colorByPoint: true,
+                        data: [{
+                            name: "Expensive",
+                            y: data.Expensive,
+                            sliced: true,
+                            selected: true
+                        }, {
+                            name: "Busy",
+                            y: data.Busy
+                        },
+                        {
+                            name: "Environment",
+                            y: data.Environment
+                        },
+                        {
+                            name: "Afford",
+                            y: data.Afford
+                        }, {
+                            name: "Other",
+                            y: data.Other
+                        }]
+                    }]
+                });
+            });
+        });
+
+
+
+    </script>

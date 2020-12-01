@@ -1,0 +1,20 @@
+﻿@using Project.Models.OnlineShopping
+
+@model List<Category>
+<ul>
+
+    @{
+
+
+        foreach (var item in Model)
+        {
+            <li>
+                @Html.ActionLink(item.CategoryName, "Index", "Products", new { page = 1, category = @item.CategoryID }, null)
+            </li>
+
+        }
+
+    }
+</ul>
+
+

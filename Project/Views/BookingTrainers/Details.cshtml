@@ -1,0 +1,157 @@
+﻿@model Project.Models.ManageStaff.BookingTrainer
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<script src="~/Scripts/_references.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/gcal.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/modernizr-2.8.3.js"></script>
+<script src="~/Scripts/moment.min.js"></script>
+<script src="~/Scripts/respond.min.js"></script>
+@{
+    ViewBag.Title = Model.Member.Username;
+    var comments = (IEnumerable<Project.Models.ManageStaff.RateBooking>)ViewBag.Comments;
+    var ratingSum = ViewBag.RatingSum;
+    var ratingCount = ViewBag.RatingCount;
+
+    decimal rating = 0;
+    if (ratingCount > 0)
+    {
+        rating = (ratingSum / ratingCount);
+    }
+    var totalRating = decimal.Parse(rating.ToString());
+}
+<div>
+    <h2 style="margin-top:30px;font-weight:900;text-align:center;">Booking for classes</h2><hr />
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.Label("Class")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Event.Subject)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Member.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Member.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BookingDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BookingDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IDNum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDNum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MobileNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MobileNumber)
+        </dd>
+
+    </dl>
+</div>
+
+<div style="margin-left:100px;">
+    <span class="starFadeN" id="sRate1"></span><span class="starFadeN" id="sRate2"></span><span class="starFadeN" id="sRate3"></span><span class="starFadeN" id="sRate4"></span><span class="starFadeN" id="sRate5"></span>
+</div>
+
+<div class="panel panel-default" style="color:#111;">
+    <div class="panel-heading">
+        <h3 style="text-transform:uppercase;font-weight:900;">Overall rating</h3>
+    </div>
+    <div class="panel-body">
+        <div class="col-md-12 well">
+            @foreach (var c in comments)
+            {
+                string ReviewerName = c.Member.Username;
+                int ReviewerID = c.Member.ID;
+                <div class="row">
+                    <div class="col-md-12">
+                        <span class="glyphicon glyphicon-user"></span> <b>@Html.ActionLink(ReviewerName, "Details", "Profile", new { area = "", id = ReviewerID }, new { target = "_blank" })</b>
+                        <span class="pull-right"><b>@c.ThisDateTime</b></span>
+                        <p> @Html.Raw(c.Comments.Replace("\n", "<br />"))</p>
+                    </div>
+                    @for (var i = 1; i <= c.Rating; i++)
+                    {
+                        <span class="starGlowN"></span>
+                    }
+                    @for (var i = (c.Rating + 1); i <= 5; i++)
+                    {
+                        <span class="starFadeN"></span>
+                    }
+                </div>
+                <hr>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+
+<hr />
+
+@if (User.IsInRole("Member"))
+{
+    @Html.Partial("_Booking")
+
+}
+
+<script>
+    function SCRate() {
+        for (var i = 1; i <= @totalRating; i++) {
+            $("#sRate" + i).attr('class', 'starGlowN');
+        }
+    }
+    $(function(){
+        SCRate();
+    });
+</script>
+
+

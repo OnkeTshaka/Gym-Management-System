@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Project.Models.Essentials.MembershipPlan>
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminSideBarPartial.cshtml";
+}
+<div class="container">
+    <div class="col-md-9" style="margin-left: 240px;margin-top:10px;
+        padding: 0px 10px;">
+        <h2>Membership Plan</h2>
+
+        <table class="table table-bordered">
+            <tr>
+                <th>Package Type</th>
+                <th>Shift</th>
+                <th>Month(s)</th>
+                <th>Join Date</th>
+                <th>Membership Fee</th>
+                <th>Joining Fee</th>
+                <th>Paid</th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @if (item.CancelMember == true)
+                    {
+
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Package.PackageType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Shift)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Package.Duration)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.JoinDate)
+                        </td>
+                        <td>
+                            @("R"+item.Package.Monthly_Fee)
+                        </td>
+                        <td>
+                            @("R"+item.Package.Joining_Fee)
+                        </td>
+                      
+                        <td>
+                            @("R"+item.Package.TotalCost)
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                                    Action <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="@Url.Action("Edit", "MembershipPlans", new { id = item.PlanID})">Cancel</a></li>
+                                    <li><a href="@Url.Action("viewTrial", "MembershipPlans", new { id = item.PlanID})">View Trial</a></li>
+                                </ul>
+                            </div>
+                            
+                        </td>
+                    }
+
+                </tr>
+            }
+        </table>
+    </div>
+</div>

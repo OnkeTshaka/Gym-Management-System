@@ -1,0 +1,114 @@
+﻿@model Project.Models.Essentials.MembershipPlan
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<h2 class="section-heading text-center" style="font-weight:900">Membership Plan</h2>
+<hr />
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Member.Profile)
+        </dt>
+
+        <dd>
+            @if (Model.Member.Profile != null)
+            {
+                <img src="~/Images/@Model.Member.Profile"
+                     class="img-responsive img-thumbnail" style="width:200px; height:200px"
+                     title="@Model.Username Profile Picture" />
+            }
+            else
+            {
+                <img src="@Url.Content("~/Images/icon.png")"
+                     class="img-responsive img-thumbnail" style="width:200px; height:200px"
+                     title="@Model.Username Profile Picture" />
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Member.IDNum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Member.IDNum)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Member.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Member.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Package.PackageType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Package.PackageType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        @*<dt>
+                @Html.DisplayNameFor(model => model.IDNum)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.IDNum)
+            </dd>*@
+        <dt>
+            @Html.DisplayNameFor(model => model.JoinDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.JoinDate)
+        </dd>
+
+        @*<dt>
+                @Html.DisplayNameFor(model => model.Discount)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Discount)
+            </dd>*@
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Package.TotalCost)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @{
+        string url = "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&amount=" + (Model.Package.TotalCost / 16.43) + "&business=Shakampechuar@gmail.com&item_name=Payments&return=https://2020grp27.azurewebsites.net/Home/Calendar";
+
+    }
+
+    <a href="@url" class="btn btn-success">Pay Using PayPal</a>
+
+
+    <a href="@Url.Action("PayFast", "MembershipPlans", new { id = Model.PlanID, price = Model.TotalCost, P_amount = Model.TotalCost, cid = Model.PlanID })" class="btn btn-success"><i class="fa fa-lock"></i>Pay Using Payfast</a>
+    @* @Html.ActionLink("Edit", "Edit", new { id = Model.PlanID }) |*@
+    @*<a href="@Url.Action("Edit", "MembershipPlans", new { id = Model.PlanID})" class="btn btn-warning"><i class="fa fa-lock"></i> Update Booking</a>*@
+</p>

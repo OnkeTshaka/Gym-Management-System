@@ -1,0 +1,97 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<Project.Models.Return.DeliveryReturn>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="text-center" style="text-transform:uppercase;">Latest Products</h2>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="text-center">Delivery Returns (Return Items)</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Driver")
+        </th>
+        <th>
+            @Html.Label("Customer")
+        </th>
+        <th>
+            @Html.Label("Return #")
+        </th>
+        <th>
+            @Html.Label("Return Date")
+        </th>
+        <th>
+            @Html.Label("Collection Date")
+        </th>
+        <th>
+            @Html.Label("From")
+        </th>
+        <th>
+            @Html.Label("To")
+        </th>
+        <th>
+            @Html.Label("Status")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Driver.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ReturnItem.ClientName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ReturnItem.ReturnItemID)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ReturnItem.ReturnDate)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DeliveryDate)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.FromTime)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ToTime)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Status)
+    </td>
+    <td>
+        <div class="btn-group">
+            <a href="@Url.Action("Details", "DeliveryReturns", new { id = item.DeliveryReturnID })" class="btn btn-info">Details</a>
+            <a href="@Url.Action("Edit", "DeliveryReturns", new { id = item.DeliveryReturnID })" class="btn btn-success">Edit</a>
+            <a href="@Url.Action("Delete", "DeliveryReturns", new { id = item.DeliveryReturnID })" class="btn btn-danger">Delete</a>
+            <a href="@Url.Action("Details", "ReturnItems", new { id = item.ReturnItemID })" class="btn btn-warning" style="margin-left:0;">
+                <span class="glyphicon glyphicon-check glyphicon-info-sign"></span> Get Directions
+            </a>
+        </div>
+    </td>
+</tr>
+    }
+
+</table>
+@if (Model.PageCount > 1)
+{
+    <div class="clear">
+        <span>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount</span>
+        <div class="div-pagination">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page}))
+        </div>
+    </div>
+}

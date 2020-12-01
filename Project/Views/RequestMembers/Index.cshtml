@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Project.Models.Refund.RequestMember>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminSideBarPartial.cshtml";
+}
+
+@foreach (var item in Model)
+{
+<div style="width:800px;border:#fff solid;margin-left:300px;margin-bottom:20px;color:#111;padding-top:0;" class="jumbotron main">
+    <h3 class="card-deck">Refund #:@item.RequestMemberID -@item.Responses</h3><hr />
+    <div>
+        <b class="pull-left">Stage:</b>
+        @if (item.Responses == Project.Models.Refund.adminResponse.Pending)
+        {
+            @Html.Action("Progress1", "Profile")
+        }
+        else if (item.Responses == Project.Models.Refund.adminResponse.Approved)
+        {
+            @Html.Action("Progress2", "ProfiLe")
+        }
+        else if (item.Responses == Project.Models.Refund.adminResponse.Declined)
+        {
+            @Html.Action("Progress3", "Profile")
+        }
+         else if (item.Responses == Project.Models.Refund.adminResponse.NotPayed)
+        {
+            @Html.Action("Progress4", "Profile")
+        }
+
+        else if (item.Responses == Project.Models.Refund.adminResponse.Payed)
+        {
+            @Html.Action("Progress5", "Profile")
+        }
+    </div><hr />
+    <h3 class="card-deck">Applicant:@item.Username </h3>
+
+
+    <h4 class="card-deck">Confirmed?</h4> @if (item.Apply == true)
+    {
+        <h4 style="color:green;font-weight:900;">Yes</h4>
+    }
+    else
+    {
+        <h4 style="color:red;font-weight:900;">No</h4>
+    }
+
+    <hr />
+    <span>
+        <b class="pull-left">Joining Date</b> <b style="margin-left:100px;">@item.JoinDate</b>
+    </span><br />
+    <span>
+        <b class="pull-left">Expiry Date</b> <b style="margin-left:100px;">@item.Period.ToLongDateString()</b>
+    </span><br />
+    <span>
+        <b class="pull-left">Amount Due</b> <b style="margin-left:100px;">@("R"+item.TotalCost)</b>
+    </span>
+    <div class="container" style="margin-top:20px;">
+        @if (item.Apply == true)
+        {
+
+        }
+        else
+        {
+            <a type="button" class="btn btn-default pull-left" href="@Url.Action("Edit", "RequestMembers",new { id = item.RequestMemberID})" style="margin-right:5px;">Confirm</a>
+
+        }
+
+        @if (item.Responses == Project.Models.Refund.adminResponse.Approved || item.Responses == Project.Models.Refund.adminResponse.Payed)
+        {
+
+        }
+        else
+        {
+            <a type="button" class="btn btn-default pull-left" href="@Url.Action("Delete", "RequestMembers",new { id = item.RequestMemberID})" style="margin-right:5px;">
+                <span class="glyphicon glyphicon-remove fa-fw  text-info"></span>
+                Cancel
+            </a>
+        }
+    </div>
+</div>
+
+}

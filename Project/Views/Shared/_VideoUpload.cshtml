@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "_VideoUpload";
+}
+
+
+
+<div>
+    <div class="pull-right" style="margin-top: 16px;">
+        @using (Html.BeginForm("Index", "Videos", FormMethod.Get))
+        {
+            <p style="background-color:lightgray;padding:10px;color:#111">
+                @Html.Label("Name: ")
+                @Html.TextBox("searching")
+                <input style="color:#111;" type="submit" value="Search" />
+                <img src="~/Images/ICONS/searchIcon.png" />
+            </p>
+        }
+    </div>
+
+
+    @using (Html.BeginForm("Create", "Videos", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+<div class="form-group" style="background-color:lightgray;padding:10px;height:70px;">
+    @if (User.IsInRole("Admin"))
+    {
+        
+    <div class="input-group" style="margin-bottom:5px;">
+        @Html.TextBox("img_upload", "", new { type = "file" })
+        <input type="submit" value="Upload" class="btn btn-success" style="padding:5px;"/>
+
+    </div>
+    }
+
+</div>
+}
+
+</div>
+
+
+

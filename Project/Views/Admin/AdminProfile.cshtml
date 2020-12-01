@@ -1,0 +1,28 @@
+﻿@model Project.Models.ApplicationUser
+@{
+    ViewBag.Title = "AdminProfile";
+}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Information</h2>
+                <table class="table table-responsive table-condensed">
+                    <tr>
+                        <td>Email</td>
+                        <td>@Model.Email</td>
+                    </tr>
+                    @*<tr>
+                        <td>Phone</td>
+                        <td>@Model.PhoneNumber</td>
+                    </tr>*@
+                </table>
+
+                <div>
+                    <br /><br />
+                    <a href="@Url.Action("Index", "Admin", new { id = Model.Id })" class="btn btn-block btn-info">Dashboard</a>
+                    <a href="@Url.Action("AddPhoneNumber", "Manage", new { id = Model.Id })" class="btn btn-block btn-warning">Change My Phone Number</a>
+                    <a href="@Url.Action("ChangePassword", "Manage", new { id = Model.Id })" class="btn btn-block btn-success">Change My Password</a>
+                </div>
+            </div>
+        </div>
+    </div>

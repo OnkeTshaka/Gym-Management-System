@@ -1,0 +1,99 @@
+﻿@model Project.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<h3 align="center">@ViewBag.Title.</h3>
+<hr style="margin-left:150px;margin-right:150px;" />
+<div style="margin-left:330px;">
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal ", role = "form", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <span style="color:white;font-size:20px;font-weight:400;text-shadow:2px 4px #111 ;"> @Html.ValidationSummary("", new { @class = "text-blue" })</span>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Enter Email" })
+                <span style="color:white;font-size:20px;font-weight:400;text-shadow:2px 4px #111 ;">@Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-white" })</span>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Enter Your First Name" })
+                <span style="color:white;font-size:20px;font-weight:400;text-shadow:2px 4px #111 ;">@Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-white" })</span>
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @placeholder = "Enter Your Last Name" })
+                <span style="color:white;font-size:20px;font-weight:400;text-shadow:2px 4px #111 ;">@Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-white" })</span>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @placeholder = "Enter Your Phone Number" })
+                <span style="color:white;font-size:20px;font-weight:400;text-shadow:2px 4px #111 ;">@Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-white" })</span>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.IDNum, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.IDNum, new { @class = "form-control", @placeholder = "Enter Your ID Number" })
+                <span style="color:white;font-size:20px;font-weight:400;text-shadow:2px 4px #111 ;">@Html.ValidationMessageFor(model => model.IDNum, "", new { @class = "text-white" })</span>
+
+            </div>
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Address, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @placeholder = "Enter Your Address" })
+                <span style="color:white;font-size:20px;font-weight:400;text-shadow:2px 4px #111 ;">@Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-white" })</span>
+
+            </div>
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Enter Your Password" })
+                <span style="color:white;font-size:20px;font-weight:400;text-shadow:2px 4px #111 ;">@Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-white" })</span>
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Confirm", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirm Your Password" })
+                <span style="color:white;font-size:20px;font-weight:400;text-shadow:2px 4px #111 ;">@Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-white" })</span>
+
+            </div>
+        </div>
+        @*<div class="form-group">
+                @Html.LabelFor(m => m.ProfilePicture, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    <h4 style="font-weight:900;color:red;">Optional</h4>
+
+                    <input type="file" name="ProfilePictureFile" />
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Register" class="btn btn-lg" style="width:300px;margin-right:90px;background-color:orange;color:#fff;" />
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

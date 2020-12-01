@@ -1,0 +1,66 @@
+﻿@model Project.Models.Essentials.Package
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Package</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PackageType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PackageType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Duration)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Duration)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Monthly_Fee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Monthly_Fee)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Joining_Fee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Joining_Fee)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalCost)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PackId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

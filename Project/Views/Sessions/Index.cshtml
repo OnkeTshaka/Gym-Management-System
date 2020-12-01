@@ -1,0 +1,72 @@
+﻿@model PagedList.IPagedList<Project.Models.ManageStaff.Session>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+}
+<div style="margin-top:20px;">
+    @if (User.IsInRole("Admin"))
+    {
+        <a href="@Url.Action("Index", "Admin")" class="btn btn-success pull-right">
+            <span class="fa fa-dashboard fa-fw  text-info"></span> Dashboard
+        </a>
+    }
+</div>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@using (Html.BeginForm("Index", "Sessions", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+<table class="table table-bordered" style="color:#fff;">
+    <tr>
+    <tr>
+        <th>
+            @Html.ActionLink("SessionType", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            Icon
+        </th>
+        <th>
+            Description
+        </th>
+        @*<th>
+            @Html.ActionLink("Price", "Index", new { sortOrder = ViewBag.PriceParm, currentFilter = ViewBag.CurrentFilter })
+        </th>*@
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SessionType)
+            </td>
+            <td>
+                <img src="data:image/png;base64,@Convert.ToBase64String(item.Icon, 0, item.Icon.Length)" style="width: 60px; height: 60px" alt="" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>*@
+            <td>
+                <div class="btn-group">
+                    <a href="@Url.Action("Details", "Sessions", new { id = item.SessionID})" class="btn btn-info">View</a>
+                    <a href="@Url.Action("Edit", "Sessions", new { id = item.SessionID})" class="btn btn-success">Edit</a>
+                    <a href="@Url.Action("Delete", "Sessions", new { id = item.SessionID})" class="btn btn-danger">Delete</a>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

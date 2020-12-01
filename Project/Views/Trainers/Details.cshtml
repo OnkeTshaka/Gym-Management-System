@@ -1,0 +1,157 @@
+﻿@model Project.Models.ManageStaff.Trainer
+@{
+    ViewBag.Title = "Details";
+}
+
+<script src="~/Scripts/_references.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/gcal.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/modernizr-2.8.3.js"></script>
+<script src="~/Scripts/moment.min.js"></script>
+<script src="~/Scripts/respond.min.js"></script>
+@{
+    ViewBag.Title = Model.Name;
+    var comments = (IEnumerable<Project.Models.ManageStaff.CommentsRating>)ViewBag.Comments;
+    var ratingSum = ViewBag.RatingSum;
+    var ratingCount = ViewBag.RatingCount;
+
+    decimal rating = 0;
+    if (ratingCount > 0)
+    {
+        rating = (ratingSum / ratingCount);
+    }
+    var totalRating = decimal.Parse(rating.ToString());
+}
+
+<div></div>
+<div class="row">
+
+    <div class="col-md-10">
+
+        <div class="thumbnail" align="center" style=" float:left; background-color: white;margin-left:300px;font-family: cursive,sans-serif; border-radius: 8%; border-color: white" border="1" width="600px" height="216px">
+            <a href="@Url.Action("Rating", "Trainers")">
+                <img src="data:image/png;base64,@Convert.ToBase64String(Model.Picture, 0, Model.Picture.Length)" class="img-responsive img-thumbnail" style="width: 1000px; height: 600px;" alt="@Model.Name" />
+            </a>
+            <div class="caption-full">
+                <h2 style="color:#111;"> @Html.DisplayFor(model => model.Name)</h2>
+                <div>
+                    <span class="starFadeN" id="sRate1"></span><span class="starFadeN" id="sRate2"></span><span class="starFadeN" id="sRate3"></span><span class="starFadeN" id="sRate4"></span><span class="starFadeN" id="sRate5"></span>
+                </div>
+                <p>
+                    @Html.DisplayFor(model => model.Description)
+                </p>
+                <p>
+
+                    <dl class="dl-horizontal" style="color:#111;">
+                        <dt>
+                            @Html.Label("Name")
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Name)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.LastName)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.LastName)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Experience)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Experience) years
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Contact_No)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Contact_No)
+                        </dd>
+
+                        <dt>
+                            @Html.Label("Speciality")
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Session.SessionType)
+                        </dd>
+                    </dl>
+                </p>
+            </div>
+
+            <div class="ratings" style="color:#111;border-radius:50%;">
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.Partial("_TrainerControl")
+
+                }
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="panel panel-default" style="color:#111;">
+    <div class="panel-heading">
+        <h3 class="panel-title">Reviews</h3>
+    </div>
+    <div class="panel-body">
+        <div class="col-md-12 well">
+            @foreach (var c in comments)
+            {
+                string ReviewerName = c.Member.Username;
+                int ReviewerID = c.Member.ID;
+                <div class="row">
+                    <div class="col-md-12">
+                        <span class="glyphicon glyphicon-user"></span> <b>@Html.ActionLink(ReviewerName, "Details", "Profile", new { area = "", id = ReviewerID }, new { target = "_blank" })</b>
+                        <span class="pull-right"><b>@c.ThisDateTime</b></span>
+                        <p> @Html.Raw(c.Comments.Replace("\n", "<br />"))</p>
+                    </div>
+                    @for (var i = 1; i <= c.Rating; i++)
+                    {
+                        <span class="starGlowN"></span>
+                    }
+                    @for (var i = (c.Rating + 1); i <= 5; i++)
+                    {
+                        <span class="starFadeN"></span>
+                    }
+                </div>
+                <hr>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+
+<hr />
+@*@if (Request.IsAuthenticated)
+{
+
+
+}*@
+@if (User.IsInRole("Member"))
+{
+    @Html.Partial("_CommentBox")
+}
+<script>
+    function SCRate() {
+        for (var i = 1; i <= @totalRating; i++) {
+            $("#sRate" + i).attr('class', 'starGlowN');
+        }
+    }
+    $(function(){
+        SCRate();
+    });
+</script>
+
+

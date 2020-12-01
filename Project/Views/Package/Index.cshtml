@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Project.Models.Essentials.Package>
+
+@{
+    ViewBag.Title = "List Of Packages";
+}
+
+<h2>List of Package</h2>
+@*<div class="container">
+        <a class="btn btn-default btn-lg pull-right" style="margin-bottom:50px;color:#fff;background-color:#ff0000" href="@Url.Action("Create", "MembershipPlans")">Join Membership</a>
+    </div>*@
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PackageType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Duration)
+        </th>
+        <th>
+            @Html.Label("Membership Fee")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Joining_Fee)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalCost)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PackageType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Monthly_Fee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Joining_Fee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalCost)
+            </td>
+            <td>
+                <div class="btn-group">
+                    <a href="@Url.Action("Details", "Package", new { id = item.PackId})" class="btn btn-info">View</a>
+                    <a href="@Url.Action("Edit", "Package", new { id = item.PackId})" class="btn btn-warning">Edit</a>
+                    <a href="@Url.Action("Delete", "Package", new { id = item.PackId })" class="btn btn-danger">Delete</a>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>

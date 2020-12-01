@@ -1,0 +1,32 @@
+﻿@model Project.Models.OnlineShopping.Order
+
+@if (Request.IsAuthenticated)
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Control</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-actions no-color">
+                <div class="col-md-4">
+                    @using (Html.BeginForm("Edit", "Orders", new { Id = @Model.OrderID }, FormMethod.Get))
+                    {
+                        <input type="submit" name="action" value="Update Details" class="col-md-12 btn btn-warning" />
+                    }
+                </div>
+                <div class="col-md-4">
+                    @using (Html.BeginForm("Delete", "Orders", new { Id = @Model.OrderID }, FormMethod.Get))
+                    {
+                        <input type="submit" name="action" value="Cancel Order" class="col-md-12 btn btn-danger" />
+                    }
+                </div>
+                @*<div class="col-md-4">
+                    @using (Html.BeginForm("Create", "Terms", FormMethod.Get))
+                    {
+                        <input type="submit" name="action" value="Return Items" class="col-md-12 btn btn-success" />
+                    }
+                </div>*@
+            </div>
+        </div>
+    </div>
+}

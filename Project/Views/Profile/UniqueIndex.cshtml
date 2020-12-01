@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Project.Models.OnlineShopping.Order>
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminSideBarPartial.cshtml";
+}
+@foreach (var item in Model)
+{
+<div style="width:800px;border:#fff solid;margin-left:300px;margin-bottom:20px;color:#111;padding-top:0;" class="jumbotron main">
+    <h3 class="card-deck">Order #:@item.OrderID </h3><hr />
+    <span>
+        <b class="pull-left">Order Status</b> <b style="margin-left:100px;">@item.Status</b>
+    </span><br />
+    <span>
+        <b class="pull-left">Order Date</b> <b style="margin-left:100px;">@item.OrderDate.ToLongDateString()</b>
+    </span><br />
+           <span>
+               <b class="pull-left">Order ID</b> <b style="margin-left:100px;color:#ff0000">@item.Refcode</b>
+           </span>
+    <div class="container" style="margin-top:20px;">
+        <a type="button" class="btn btn-default pull-left" href="@Url.Action("Details", "Orders",new { id = item.OrderID})" style="margin-right:5px;">Order Details</a>
+        <a type="button" class="btn btn-default pull-left" href="@Url.Action("Create", "Terms")" style="margin-right:5px;">
+            <span class="glyphicon glyphicon-share fa-fw  text-info"></span>
+            Return Items
+        </a>
+    </div>
+</div>
+
+}

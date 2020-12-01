@@ -1,0 +1,35 @@
+﻿@model Project.Models.Return.ReturnItemIndexData
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminSideBarPartial.cshtml";
+}
+@foreach (var item in Model.ReturnItems)
+{
+    <div style="width:800px;border:#fff solid;margin-left:300px;margin-bottom:20px;color:#111;padding-top:0;" class="jumbotron main">
+        <h3 class="card-deck">Return #@item.ReturnItemID -@item.Status</h3><hr />
+        <span>
+            <b class="pull-left">Items</b> <b style="margin-left:100px;">
+    @{
+        foreach (var product in item.Products)
+        {
+            @(product.Name +" (R"+product.Price+")") <br />
+        }
+    }
+</b>
+        </span><br />
+        <span>
+            <b class="pull-left">Return Date</b> <b style="margin-left:100px;">@item.ReturnDate.ToLongDateString()</b>
+        </span><br />
+        <span>
+            <b class="pull-left">Return reasons</b> <b style="margin-left:100px;color:#ff0000">@item.Reason.Name</b>
+        </span><br />
+        <span>
+            <b class="pull-left">Return actions</b> <b style="margin-left:100px;color:#ff0000">@item.selectAction</b>
+        </span>
+        <div class="container" style="margin-top:20px;">
+            <a type="button" class="btn btn-default pull-left" href="@Url.Action("Edit", "ReturnItems",new { id = item.ReturnItemID})" style="margin-right:5px;">Details</a>
+        </div>
+    </div>
+
+}

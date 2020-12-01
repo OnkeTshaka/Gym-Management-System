@@ -1,0 +1,208 @@
+﻿@model Project.Models.Return.ReturnItem
+
+@{
+    ViewBag.Title = "Create";
+}
+@using System.Configuration;
+@{
+    ViewBag.Title = "Return Items";
+    string _googlesitekey = ConfigurationManager.AppSettings["GoogleSitekey"];
+}
+<link href="~/Content/mystyle.css" rel="stylesheet" />
+<h2 class="text-center text-success">Return Items</h2>
+<div id="message" class="mt-4">@TempData["message"]</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.DropDownListFor(model => model.Status,
+                       new[]
+                       {
+                  new SelectListItem{Text="Pending",Value="Pending"},
+                new SelectListItem{Text="Recieved",Value="Recieved"},
+                new SelectListItem{Text="Delivered",Value="Delivered"},
+                  new SelectListItem{Text="Item Repaired",Value="Item Repaired"},
+                       new SelectListItem{Text="Item Refunded",Value="Item Refunded"},
+                new SelectListItem{Text="Approved",Value="Approved"},
+                 new SelectListItem{Text="Request Rejected",Value="Request Request"},
+                       }
+
+                       , new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="form-group">
+            <h3 style="margin-left:100px;">Which items do you want to return?</h3><br />
+            <div class="col-md-offset-2 col-md-10">
+                <table>
+                    <tr>
+                        @{
+                            List<Project.Models.Return.AssignedProductData> products = ViewBag.Products;
+                            int cnt = 0;
+
+                            foreach (var product in products)
+                            {
+                                if (cnt++ % 3 == 0)
+                                {
+                                @:</tr><tr>
+                                }
+                                @:<td>
+                                    <input type="checkbox"
+                                           name="selectedProducts"
+                                           value="@product.ProductID"
+                                           @(Html.Raw(product.Assigned ? "checked=\"checked\"" : "")) />
+                                    @product.Name
+                                @:</td>
+                            }
+                        @:</tr>
+                        }
+                    </table>
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                @Html.Label("Return reason", new { @class = "control-label col-md-2" })
+                @*@Html.LabelFor(model => model.ReasonID, "ReasonID", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    @Html.DropDownList("ReasonID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ReasonID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Return actions", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EnumDropDownListFor(model => model.selectAction, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.selectAction, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.From, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10" style="color:#111;">
+                    @Html.TextBoxFor(m => m.From, new { id = "travelfrom", type = "text", name = "name", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.From, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <section class="form-group">
+                <div class="g-recaptcha" style="margin-left:220px;" data-sitekey=@_googlesitekey></div>
+
+            </section>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Submit" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<div id="dvMap" style="min-height:1px;width:1px;"></div>
+@section scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <!--ENSURE YOU CHANGE TO YOUR OWN API KEY HERE !!! -->
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDinWPcxH7MB6uiKDMD8h1mmVk3CNVU9vw" type="text/javascript"></script>
+
+    <!-- code for example 1 -->
+    <script>
+
+        var source, destination;
+        var directionsDisplay;
+        var directionsService = new google.maps.DirectionsService();
+
+        // initialise the location of the map on Chichester in England (ref lat and lng)
+        var map = new google.maps.Map(document.getElementById('dvMap'), {
+            center: { lat: -29.856349, lng: 31.003004 },
+            zoom: 13,
+            mapTypeId: 'roadmap'
+        });
+
+        google.maps.event.addDomListener(window, 'load', function () {
+            new google.maps.places.SearchBox(document.getElementById('travelfrom'));
+            new google.maps.places.SearchBox(document.getElementById('travelto'));
+            directionsDisplay = new google.maps.DirectionsRenderer({ 'draggable': true });
+        });
+
+        function GetRoute() {
+
+            directionsDisplay.setMap(map);
+
+            source = document.getElementById("travelfrom").value;
+            destination = document.getElementById("travelto").value;
+
+            var request = {
+                origin: source,
+                destination: destination,
+                travelMode: google.maps.TravelMode.DRIVING
+            };
+
+            directionsService.route(request, function (response, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setDirections(response);
+                }
+            });
+
+            //*********DISTANCE AND DURATION**********************//
+            var service = new google.maps.DistanceMatrixService();
+            service.getDistanceMatrix({
+                origins: [source],
+                destinations: [destination],
+                travelMode: google.maps.TravelMode.DRIVING,
+                unitSystem: google.maps.UnitSystem.METRIC,
+                avoidHighways: false,
+                avoidTolls: false
+            }, function (response, status) {
+
+                if (status == google.maps.DistanceMatrixStatus.OK && response.rows[0].elements[0].status != "ZERO_RESULTS") {
+                    var distance = response.rows[0].elements[0].distance.text;
+                    var duration = response.rows[0].elements[0].duration.value;
+                    var dvDistance = document.getElementById("dvDistance");
+                    duration = parseFloat(duration / 60).toFixed(2);
+                    dvDistance.innerHTML = "";
+                    dvDistance.innerHTML += "Distance: " + distance + "<br />";
+                    dvDistance.innerHTML += "Time:" + duration + " min";
+
+                } else {
+                    alert("Unable to find the distance via road.");
+                }
+            });
+        }
+
+    </script>
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+        $(function () {
+            if ($("#message").html() != '') {
+                $("#message").addClass("alert alert-danger text-center").show();
+
+                setTimeout(function () {
+
+                    $("#message").fadeOut("normal", function () {
+                        $(this).remove();
+                    });
+
+                }, 2000);
+            }
+        });
+    </script>
+}
+

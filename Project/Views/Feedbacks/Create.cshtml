@@ -1,0 +1,44 @@
+﻿@model Project.Models.Refund.Feedback
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Reason For Cancellation</h2><br />
+<div class="jumbotron">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-10" style="color:#111;">
+                @Html.RadioButtonFor(model => model.Reasons, "Expensive")@Html.Label("Expensive")<br />
+                @Html.RadioButtonFor(model => model.Reasons, "Busy")@Html.Label("Busy")<br />
+                @Html.RadioButtonFor(model => model.Reasons, "Other")@Html.Label("Other")<br />
+                @Html.RadioButtonFor(model => model.Reasons, "Environment")@Html.Label("I don't like the environment")<br />
+                @Html.RadioButtonFor(model => model.Reasons, "Afford")@Html.Label("I can't afford membership")<br />
+            </div>
+        </div>
+        
+            <div class="form-group">
+                <div class="col-md-10" style="color:#111;">
+                    @Html.EditorFor(model => model.Other, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Other, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Next" class="btn btn-warning" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+

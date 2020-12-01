@@ -1,0 +1,65 @@
+﻿@using Project.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+
+
+<div class="row">
+    <div style="        margin-left: 240px;
+        margin-right: 285px;
+        margin-top: 165px; border: none" align="center">
+        <h4 align="center">
+            I AM ALREADY REGISTERED
+        </h4>
+        <section id="loginForm" align="center">
+            <br />
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @style = "color:white;font-size:20px;font-weight:400;text-shadow:2px 4px #111 ;" })
+                <div class="form-group" align="center" style="margin-left:150px;">
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Enter UserName" })
+                        <span>@Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-white", @style = "color:white;font-size:20px;font-weight:400;text-shadow:2px 4px #111 ;" })</span>
+                    </div>
+                </div>
+                <div class="form-group" align="center" style="margin-left:150px;">
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Enter Password" })
+                        <span style="color:white;font-size:20px;font-weight:400;text-shadow:2px 4px #111 ;">@Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-white" })</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        @*<div class="checkbox">
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                            @Html.LabelFor(m => m.RememberMe)
+                        </div>*@
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Log in" class="btn btn-lg" style="width:300px;margin-right:90px;background-color:orange;color:#fff;" />
+                    </div>
+                </div>
+                <p>
+                    @Html.ActionLink("Create a new Account", "Register")
+                </p>
+                @* Enable this once you have account confirmation enabled for password reset functionality
+                <p>
+                    @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                </p>*@
+            }
+        </section>
+    </div>
+    @*<div class="col-md-4">
+        <section id="socialLoginForm">
+            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+        </section>
+    </div>*@
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

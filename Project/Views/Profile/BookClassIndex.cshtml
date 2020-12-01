@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Project.Models.ManageStaff.BookingTrainer>
+
+@{
+    ViewBag.Title = "BookClassIndex";
+    Layout = "~/Views/Shared/_AdminSideBarPartial.cshtml";
+}
+
+<div class="container">
+    <div class="col-md-9" style="margin-left: 240px;margin-top:10px;
+        padding: 0px 10px;">
+        <h2>Bookings</h2>
+
+        <table class="table table-bordered">
+            <tr>
+                <th>Class</th>
+                <th>Description</th>
+                <th colspan="2"></th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Event.Subject)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Event.Description)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Details", "BookingTrainers", new { id = item.BookingID})" class="btn btn-info">Feedback</a>
+                    </td>
+
+                </tr>
+            }
+        </table>
+    </div>
+</div>

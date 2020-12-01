@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Project.Models.Refund.RequestMember>
+
+@{
+    ViewBag.Title = "Unfiltered";
+}
+
+<h2 class="text-center">PROCESS REFUND REQUESTS (MEMBERSHIPS)</h2>
+
+
+<table class="table" style="margin-top:40px;">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.JoinDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalCost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Apply)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Period)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.JoinDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalCost)
+        </td>
+        <td>
+            @if(item.Apply == true)
+            {
+                <h5 class="alert-danger" style="font-weight:900">CONFIRMED</h5>
+            }
+            else
+            {
+               <h3 class="alert-danger">NOT CONFIRMED</h3>
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Period)
+        </td>
+        <td>
+            <div class="btn-group">
+                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                    Action <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li>@Html.ActionLink("Edit", "Edit", new { id = item.RequestMemberID })</li>
+                    <li>@Html.ActionLink("Details", "Details", new { id = item.RequestMemberID })</li>
+                    <li>@Html.ActionLink("Delete", "Delete", new { id = item.RequestMemberID })</li>
+                </ul>
+            </div>
+         
+        </td>
+    </tr>
+}
+
+</table>

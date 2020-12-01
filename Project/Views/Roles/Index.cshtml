@@ -1,0 +1,120 @@
+﻿@model Project.ViewModels.UsersRolesViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+            <div class="btn-group" role="group">
+                @Html.ActionLink("Add New Role", "AddNewRole", null, htmlAttributes: new { @class = "btn btn-success" })
+            </div>
+            <div class="btn-group" role="group">
+                @Html.ActionLink("Delete A Role", "DeleteRole", null, htmlAttributes: new { @class = "btn btn-danger" })
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><h4>Administrators</h4></div>
+
+    <table class="table table-bordered table-striped" style="color:#111;">
+        <tr>
+            <th>
+                @Html.Label("User Name")
+            </th>
+            <th>
+                @Html.Label("Roles")
+            </th>
+            <th>
+                @Html.Label("Control")
+            </th>
+        </tr>
+
+        @foreach (var Adminstrator in Model.Adminstrators)
+        {
+            <tr>
+                <td>
+                    @Adminstrator.UserName
+                </td>
+                <td>
+                    Adminstrator
+                </td>
+                <td>
+                    @Html.ActionLink("More Details", "Details", new { id = Adminstrator.Id })
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><h4>Managers</h4></div>
+
+    <table class="table table-striped table-bordered">
+        <tr>
+            <th>
+                @Html.Label("User Name")
+            </th>
+            <th>
+                @Html.Label("Roles")
+            </th>
+            <th>
+                @Html.Label("Control")
+            </th>
+        </tr>
+
+        @foreach (var Manager in Model.Managers)
+        {
+            <tr>
+                <td>
+                    @Manager.UserName
+                </td>
+                <td>
+                    Manager
+                </td>
+                <td>
+                    @Html.ActionLink("More Details", "Details", new { id = Manager.Id })
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><h4>Members</h4></div>
+
+    <table class="table table-bordered table-striped" style="color:#111;">
+        <tr>
+            <th>
+                @Html.Label("User Name")
+            </th>
+            <th>
+                @Html.Label("Roles")
+            </th>
+            <th>
+                @Html.Label("Control")
+            </th>
+        </tr>
+
+        @foreach (var Seller in Model.Members)
+        {
+            <tr>
+                <td>
+                    @Seller.UserName
+                </td>
+                <td>
+                    Member
+                </td>
+                <td>
+                    @Html.ActionLink("More Details", "Details", new { id = Seller.Id })
+                </td>
+            </tr>
+        }
+    </table>
+</div>

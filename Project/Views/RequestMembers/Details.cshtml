@@ -1,0 +1,110 @@
+﻿@model Project.Models.Refund.RequestMember
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>PAY FOR REFUND REQUEST</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.JoinDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.JoinDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalCost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Apply)
+        </dt>
+
+        <dd>
+            @if (Model.Apply == true)
+            {
+                <h5 class="alert-danger" style="font-weight:900">CONFIRMED</h5>
+            }
+            else
+            {
+                <h3 class="alert-danger">NOT CONFIRMED</h3>
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Period)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Period)
+        </dd>
+
+    </dl>
+    <div>
+        <b class="pull-left">Stage:</b>
+        @if (Model.Responses == Project.Models.Refund.adminResponse.Pending)
+        {
+            @Html.Action("Progress1", "Profile")
+        }
+        else if (Model.Responses == Project.Models.Refund.adminResponse.Approved)
+        {
+            @Html.Action("Progress2", "ProfiLe")
+        }
+        else if (Model.Responses == Project.Models.Refund.adminResponse.Declined)
+        {
+            @Html.Action("Progress3", "Profile")
+        }
+        else if (Model.Responses == Project.Models.Refund.adminResponse.NotPayed)
+        {
+            @Html.Action("Progress4", "Profile")
+        }
+
+        else if (Model.Responses == Project.Models.Refund.adminResponse.Payed)
+        {
+            @Html.Action("Progress5", "Profile")
+        }
+    </div><hr />
+    @{
+        string url = "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&amount=" + ((Model.TotalCost) / 16.43) + "&business=Shakampechuar@gmail.com&item_name=Payments&return=https://localhost:44376//RequestMembers/Unfiltered";
+
+    }
+    <a href="@url" class="btn btn-success">Pay Using PayPal</a>
+</div>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.RequestMemberID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

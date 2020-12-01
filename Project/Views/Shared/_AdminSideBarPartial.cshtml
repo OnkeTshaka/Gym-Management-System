@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        font-family: "Lato", sans-serif;
+    }
+
+    .sidenav {
+        width: 230px;
+        position: fixed;
+        z-index: 1;
+        top: 20px;
+        left: 10px;
+        background: #eee;
+        overflow-x: hidden;
+        padding: 8px 0;
+        margin-top: 100px;
+    }
+
+        .sidenav a {
+            padding: 6px 8px 6px 16px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #2196F3;
+            display: block;
+        }
+
+            .sidenav a:hover {
+                color: #064579;
+            }
+
+    .main {
+        margin-left: 120px; /* Same width as the sidebar + left position in px */
+        padding: 0px 10px;
+    }
+</style>
+<br />
+<br />
+<div class="sidenav">
+    <a href="@Url.Action("Details", "Profile")" class="btn btn-lg" style="margin-left:0;">
+        <span class="glyphicon glyphicon-user fa-fw  text-info"></span> My Account
+    </a>
+    <a href="@Url.Action("RefundIndex", "Profile")" class="btn btn-lg" style="margin-left:0;">
+        <span class="glyphicon glyphicon-globe fa-fw  text-info"></span> Membership
+    </a>
+    <a href="@Url.Action("BookClassIndex", "Profile")" class="btn btn-lg" style="margin-left:0;">
+        <span class="glyphicon glyphicon-credit-card fa-fw  text-info"></span> Booked Classes
+    </a>
+    <a href="@Url.Action("UniqueIndex", "Profile")" class="btn btn-lg" style="margin-left:0;">
+        <span class="glyphicon glyphicon-briefcase fa-fw  text-info"></span> My Order History
+    </a>
+    <a href="@Url.Action("Index", "RequestMembers")" class="btn btn-lg" style="margin-left:0;">
+        <span class="glyphicon glyphicon-piggy-bank fa-fw  text-info"></span> Refund (Membership)
+    </a>
+    <a href="@Url.Action("ReturnIndex", "Profile")" class="btn btn-lg" style="margin-left:0;">
+        <span class="glyphicon glyphicon-retweet fa-fw  text-info"></span> Refund (Return)
+    </a>
+
+
+</div>
+
+
+@RenderBody() 

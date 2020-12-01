@@ -1,0 +1,111 @@
+﻿@model Project.Models.Return.ReturnItemIndexData
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Returned Items</h2>
+<a href="@Url.Action("Index", "DeliveryReturns")" class="btn btn-warning" style="margin-left:0;">
+     Assign To Driver
+</a><br />
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Reason")
+        </th>
+
+        <th>
+            @Html.Label("Client Name")
+        </th>
+        <th>
+            @Html.Label("Email")
+        </th>
+        <th>
+            @Html.Label("Return Date")
+        </th>
+        <th>
+            @Html.Label("Status")
+        </th>
+        <th>
+            @Html.Label("Action")
+        </th>
+        <th>
+            @Html.Label("Returning Products")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.ReturnItems)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reason.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReturnDate)
+            </td>
+            <td style="color:red;">
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.selectAction)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Tax)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Total)
+                </td>*@
+            @*<td>
+                    @{
+                        if (item.Status == true)
+                        {
+                            <h5 style="color:#4cff00;font-weight:900;">Approved</h5>
+                        }
+                        else if (item.Status == false)
+                        {
+                            <h5 style="color:#ff0000;font-weight:900;">Pending</h5>
+                        }
+                    }
+                </td>*@
+        <td>
+            @{
+                foreach (var product in item.Products)
+                {
+                    @(product.Name +" (R"+product.Price+")") <br />
+                }
+            }
+        </td>
+            @if (User.IsInRole("Admin"))
+            {
+                <td>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Edit", "Edit", new { id = item.ReturnItemID })</li>
+                            <li>@Html.ActionLink("Details", "Details", new { id = item.ReturnItemID })</li>
+                            <li>@Html.ActionLink("Delete", "Delete", new { id = item.ReturnItemID })</li>
+                            <li>
+                                @{
+                                    string url = "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&amount=" + ((item.Products.Sum(z => z.Price)) / 16.43) + "&business=Shakampechuar@gmail.com&item_name=Payments&return=https://2020grp27.azurewebsites.net/ReturnItems/Index";
+
+                                }
+                                <a href="@url" class="btn btn-default">Pay</a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            }
+        </tr>
+    }
+
+</table>

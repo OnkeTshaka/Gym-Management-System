@@ -1,0 +1,76 @@
+﻿@model Project.Models.ManageStaff.Member
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminSideBarPartial.cshtml";
+}
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    /* Create two equal columns that floats next to each other */
+    .column {
+        float: left;
+        width: 50%;
+        padding: 10px;
+        height: 300px; /* Should be removed. Only for demonstration */
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+</style>
+<div style="margin-top:20px;">
+    @if (User.IsInRole("Admin"))
+    {
+        <a href="@Url.Action("Index", "Admin")" class="btn btn-success pull-right">
+            <span class="fa fa-dashboard fa-fw  text-info"></span> Dashboard
+        </a>
+    }
+</div>
+<div class="container">
+    <div class="main" style="margin-left:200px;">
+        <div class="row">
+            <div class="column">
+                <h3>About</h3>
+                <ul>
+                    <li>Username: @Html.DisplayFor(model => model.Username)</li>
+                    <li>Phone: @Html.DisplayFor(model => model.MobileNumber)</li>
+                    <li>Joined On: @Html.DisplayFor(model => model.JoinDate)</li>
+                    <li>ID Number: @Html.DisplayFor(model => model.IDNum)</li>
+                    <li>Address: @Html.DisplayFor(model => model.Address)</li>
+
+
+                </ul>
+                @Html.Partial("_ProfileControlPartial")
+
+            </div>
+            <div class="column">
+                <h3>WELCOME BACK!</h3>
+                @if (Model.Profile != null)
+                {
+                    <img src="~/Images/@Model.Profile"
+                         class="img-responsive img-thumbnail" style="width:300px; height:300px;border-radius:50%;"
+                         title="@Model.Username Profile Picture" />
+                }
+                else
+                {
+                    <img src="@Url.Content("~/Images/icon.png")"
+                         class="img-responsive img-thumbnail" style="width:300px; height:300px;border-radius:50%;"
+                         title="@Model.Username Profile Picture" />
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

@@ -1,0 +1,115 @@
+﻿@model Project.Models.Essentials.MembershipPlan
+
+@{
+    ViewBag.Title = "Create";
+}
+
+    <h2 style="margin-top:50px;font-weight:600; text-align:center;">Choose a membership Plan</h2>
+    <img src="~/Images/12.png" style="height:300px;width:100%"/>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+    <div style="background-color:black; text-align:center">
+        <p><strong>Preferred Check In Time</strong></p>
+        <div style="background-color:brown">
+            @Html.RadioButtonFor(m => m.Shift, "Morning", new { @class = "radio-inline" })@Html.Label("Morning")<br />
+            @Html.RadioButtonFor(m => m.Shift, "Afternoon", new { @class = "radio-inline" })@Html.Label("Afternoon")<br />
+            @Html.RadioButtonFor(m => m.Shift, "Evening", new { @class = "radio-inline" })@Html.Label("Evening")
+        </div>
+    </div>
+    <br />
+
+    <br />
+
+    @*<div class="form-group" style="background-color:bisque; text-align:center">*@
+    <div style="background-color:black; text-align:center">
+        <p><strong>Membership Type</strong></p>
+        @*@Html.LabelFor(model => model.PackId, "Membership Type", htmlAttributes: new { @class = "control-label col-md-2" })*@
+        <div style="margin-left:650px;">
+            @Html.DropDownList("PackId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.PackId, "", new { @class = "text-danger" })
+            @*@Html.DropDownList("PackId", null,)
+                @Html.ValidationMessageFor(model => model.PackId, "", new { @class = "text-danger" })*@
+        </div>
+    </div>
+
+
+
+
+
+
+
+    @*<div class="form-group" style="margin-left:300px;">
+            @Html.Label("Preferred CheckIn Time", new { @class = "col-md-2 control-label" })
+            <div>
+                @Html.RadioButtonFor(m => m.Shift, "Morning", new { @class = "radio-inline" })@Html.Label("Morning")
+                @Html.RadioButtonFor(m => m.Shift, "Afternoon", new { @class = "radio-inline" })@Html.Label("Afternoon")
+                @Html.RadioButtonFor(m => m.Shift, "Evening", new { @class = "radio-inline" })@Html.Label("Evening")
+            </div>
+        </div>*@
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.JoinDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.JoinDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.JoinDate, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.Discount, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.total, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.total, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.total, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    @*<div class="form-group" style="margin-left:300px;">
+            @Html.LabelFor(model => model.PackId, "Select Membership", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="margin-left:440px">
+                @Html.DropDownList("PackId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PackId, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.memberID, "memberID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("memberID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.memberID, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10" style="margin-left:auto">
+            <input type="submit" value="Request" class="btn btn-success" onclick="myFunction()" style="margin-left:300px;" />
+        </div>
+    </div>
+</div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript" style="color:aqua;">
+
+        function myFunction() {
+            alert("Your email has been Sent");
+        }
+    </script>
+}
+
