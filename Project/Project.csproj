@@ -255,7 +255,6 @@
     <Compile Include="Controllers\Essentials\GenerateReportsController.cs" />
     <Compile Include="Controllers\Essentials\MembershipPlansController.cs" />
     <Compile Include="Controllers\Essentials\PackageController.cs" />
-    <Compile Include="Controllers\Home2Controller.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManageStaff\BookingTrainersController.cs" />
@@ -280,10 +279,8 @@
     <Compile Include="Controllers\Return\SearchController.cs" />
     <Compile Include="Controllers\Return\TermsController.cs" />
     <Compile Include="Controllers\SendMailController.cs" />
-    <Compile Include="Controllers\Supplier\Admin2Controller.cs" />
     <Compile Include="Core\HtmlHelperExtensions.cs" />
     <Compile Include="Core\MultipleStepProgressTabOption.cs" />
-    <Compile Include="Excel\OrderExcel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -323,23 +320,17 @@
     <Compile Include="Models\Return\Reasons.cs" />
     <Compile Include="Models\Return\ReturnItem.cs" />
     <Compile Include="Models\Return\ReturnItemIndexData.cs" />
-    <Compile Include="Models\Supplier\Item.cs" />
-    <Compile Include="Models\Supplier\myCart.cs" />
-    <Compile Include="Models\Supplier\supplierCategory.cs" />
-    <Compile Include="Models\Supplier\supplierProduct.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\CartViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="ViewModels\DriverDashboardViewModel.cs" />
-    <Compile Include="ViewModels\HomeIndexViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\ProductPageViewModel.cs" />
     <Compile Include="ViewModels\RatingTrainerViewModel.cs" />
     <Compile Include="ViewModels\SalesViewModel.cs" />
-    <Compile Include="ViewModels\supplierProductPageViewModel.cs" />
     <Compile Include="ViewModels\UserRolesViewModel.cs" />
     <Compile Include="ViewModels\UsersRolesViewModel.cs" />
   </ItemGroup>
@@ -550,19 +541,6 @@
     <Content Include="Views\Reasons\Delete.cshtml" />
     <Content Include="Views\Home\GetDirections.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
-    <Content Include="Views\Home2\Index.cshtml" />
-    <Content Include="Views\Home2\Checkout.cshtml" />
-    <Content Include="Views\Home2\CheckoutDetails.cshtml" />
-    <Content Include="Views\Admin2\Categories.cshtml" />
-    <Content Include="Views\Admin2\CategoryAdd.cshtml" />
-    <Content Include="Views\Admin2\CategoryDelete.cshtml" />
-    <Content Include="Views\Admin2\CategoryEdit.cshtml" />
-    <Content Include="Views\Admin2\Dashboard.cshtml" />
-    <Content Include="Views\Admin2\Product.cshtml" />
-    <Content Include="Views\Admin2\ProductAdd.cshtml" />
-    <Content Include="Views\Admin2\ProductDelete.cshtml" />
-    <Content Include="Views\Admin2\ProductDetails.cshtml" />
-    <Content Include="Views\Admin2\ProductEdit.cshtml" />
     <Content Include="Views\SendMail\Index.cshtml" />
     <Content Include="Views\SendMail\ThankYou.cshtml" />
     <Content Include="Views\Orders\Details2.cshtml" />
@@ -609,14 +587,10 @@
     <Content Include="Views\DeliveryReturns\Index.cshtml" />
     <Content Include="Views\Orders\myDriver.cshtml" />
     <Content Include="Views\DriverDashboard\Index.cshtml" />
-    <Content Include="Views\SupplierClass\Index.cshtml" />
-    <Content Include="Views\SupplierClass\ThankYou2.cshtml" />
-    <Content Include="Views\SupplierClass\Return.cshtml" />
     <Content Include="Views\GenerateReports\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ProdImg\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -9,7 +9,6 @@ using Project.Models.ManageStaff;
 using Project.Models.OnlineShopping;
 using Project.Models.Refund;
 using Project.Models.Return;
-using Project.Models.Supplier;
 
 namespace Project.Models
 {
@@ -45,9 +44,6 @@ namespace Project.Models
         public virtual DbSet<RateBooking> RateBookings{ get; set; }
         public virtual DbSet<RateClass> RateClasses { get; set; }
         public virtual DbSet<ContactUsForm> ContactUsForms { get; set; }
-        public DbSet<supplierProduct> supplierProducts { get; set; }
-        //public DbSet<Item> items { get; set; }
-        public DbSet<supplierCategory> supplierCategories { get; set; }
         //Essentials
         public virtual DbSet<Package> Packages { get; set; }
         public virtual DbSet<SupplierClass> supplierClass { get; set; }

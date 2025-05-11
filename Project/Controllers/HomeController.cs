@@ -1,6 +1,5 @@
 ﻿using PagedList;
 using Project.Models;
-using Project.Models.Supplier;
 using Project.Models.ManageStaff;
 using Project.ViewModels;
 using System;
